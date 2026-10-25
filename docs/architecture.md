@@ -72,7 +72,7 @@ The app is organized by **feature columns**, and each feature has its own screen
 - Implement the repository interfaces from the Domain layer.
 - Call the **Backend REST API** through typed API clients (e.g., `AppointmentApi`, `PaymentApi`).
 - Map API/database data into domain models.
-- Optionally cache selected data locally in **Room** for offline support (e.g., appointments, nutrition plan).
+- Optionally cache selected data locally in **Room** for offline support.
 
 **Golden rule:** *The Data layer contains no UI logic and exposes data only through repository interfaces.* The app talks only to the Backend REST API and never directly to the Server Database or to Moyasar.
 
@@ -202,6 +202,6 @@ The labels below match **P1–P9** in the diagram.
 
 - **Single backend entry point.** The app calls only the Backend REST API. This keeps credentials (database, payment gateway) off the device and gives one place to enforce security and business validation.
 - **Gateway handled server-side.** Card processing is delegated to Moyasar through the backend, so the app never handles raw payment confirmation logic.
-- **Optional offline support.** Room caches selected data (such as appointments and the nutrition plan). Repositories decide whether to read from cache or network, so the UI and Domain layers are unaffected.
+- **Optional offline support.** Room caches selected data. Repositories decide whether to read from cache or network, so the UI and Domain layers are unaffected.
 - **One ViewModel per feature, one use case per action.** This keeps classes small, focused and easy to test.
 - **Navigation is state-driven.** Screen transitions (e.g., booking → payment → confirmation) respond to ViewModel state rather than being triggered from data-layer code.
