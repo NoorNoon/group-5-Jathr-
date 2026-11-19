@@ -61,4 +61,11 @@
     <string name="no_specialist_notes">لا توجد ملاحظات من الأخصائي</string>
     <string name="no_weight_data">لا توجد بيانات وزن بعد</string>
     <string name="no_progress_data">لا توجد بيانات تقدم بعد</string>
+    <string name="availability_title">أوقات توفر الأخصائي</string>
+    <string name="day_available_format">%s | متاح</string>
+    <string name="day_unavailable_format">%s | غير متاح</string>
+    <string name="time_range_label">وقت البداية والنهاية</string>
+    <string name="time_range_format">%s (%s – %s)</string>
+    <string name="save_availability_button">حفظ الأوقات</string>
+    <string name="no_availability_times">لا توجد أوقات محددة بعد</string>
 </resources>
