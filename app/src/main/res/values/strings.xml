@@ -68,4 +68,5 @@
     <string name="time_range_format">%s (%s – %s)</string>
     <string name="save_availability_button">حفظ الأوقات</string>
     <string name="no_availability_times">لا توجد أوقات محددة بعد</string>
+    <string name="shared_followup_log">سجل المتابعات المشترك</string>
 </resources>

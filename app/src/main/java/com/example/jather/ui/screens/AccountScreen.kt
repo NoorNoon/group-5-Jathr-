@@ -68,6 +68,43 @@ private val IconBellNotification: ImageVector = ImageVector.Builder(
     }
 }.build()
 
+private val IconListHistory: ImageVector = ImageVector.Builder(
+    name = "ListHistory",
+    defaultWidth = 24.dp,
+    defaultHeight = 24.dp,
+    viewportWidth = 24f,
+    viewportHeight = 24f
+).apply {
+    path(
+        stroke = SolidColor(Color.Black),
+        strokeLineWidth = 2f
+    ) {
+        moveTo(3f, 6f)
+        lineTo(21f, 6f)
+        moveTo(3f, 12f)
+        lineTo(21f, 12f)
+        moveTo(3f, 18f)
+        lineTo(21f, 18f)
+    }
+}.build()
+
+private val IconChevronLeft: ImageVector = ImageVector.Builder(
+    name = "ChevronLeft",
+    defaultWidth = 24.dp,
+    defaultHeight = 24.dp,
+    viewportWidth = 24f,
+    viewportHeight = 24f
+).apply {
+    path(
+        stroke = SolidColor(Color.Black),
+        strokeLineWidth = 2f
+    ) {
+        moveTo(15f, 18f)
+        lineTo(9f, 12f)
+        lineTo(15f, 6f)
+    }
+}.build()
+
 @Composable
 fun AccountScreen(
     uiState: AccountUiState,
@@ -77,6 +114,7 @@ fun AccountScreen(
     onEditHealthClick: () -> Unit,
     onMedicalFilesClick: () -> Unit,
     onNotificationsClick: () -> Unit,
+    onFollowUpLogClick: () -> Unit,
     onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -355,6 +393,7 @@ fun AccountScreen(
                     Column(
                         modifier = Modifier.fillMaxWidth(),
                     ) {
+                        // Row 1: Medical Files
                         Surface(
                             onClick = onMedicalFilesClick,
                             color = Color.Transparent,
@@ -382,6 +421,7 @@ fun AccountScreen(
 
                         HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
 
+                        // Row 2: Notifications
                         Surface(
                             onClick = onNotificationsClick,
                             color = Color.Transparent,
@@ -403,6 +443,52 @@ fun AccountScreen(
                                     text = stringResource(R.string.notifications_count_format, uiState.newNotificationsCount),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = JathrTextSecondary,
+                                )
+                            }
+                        }
+
+                        HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
+
+                        // Row 3: Shared Follow-up Log
+                        Surface(
+                            onClick = {
+                                // TODO: logic - I will write it
+                                onFollowUpLogClick()
+                            },
+                            color = Color.Transparent,
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                ) {
+                                    // TODO: icon
+                                    Icon(
+                                        imageVector = IconListHistory,
+                                        contentDescription = stringResource(R.string.shared_followup_log),
+                                        tint = JathrPrimary,
+                                        modifier = Modifier.size(20.dp),
+                                    )
+                                    Text(
+                                        text = stringResource(R.string.shared_followup_log),
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        fontWeight = FontWeight.Medium,
+                                        color = JathrTextMain,
+                                    )
+                                }
+
+                                // TODO: icon
+                                Icon(
+                                    imageVector = IconChevronLeft,
+                                    contentDescription = stringResource(R.string.shared_followup_log),
+                                    tint = JathrTextSecondary,
+                                    modifier = Modifier.size(20.dp),
                                 )
                             }
                         }
@@ -490,6 +576,7 @@ fun AccountScreenSamplePreview() {
             onEditHealthClick = {},
             onMedicalFilesClick = {},
             onNotificationsClick = {},
+            onFollowUpLogClick = {},
             onLogoutClick = {},
         )
     }
@@ -507,6 +594,7 @@ fun AccountScreenEmptyPreview() {
             onEditHealthClick = {},
             onMedicalFilesClick = {},
             onNotificationsClick = {},
+            onFollowUpLogClick = {},
             onLogoutClick = {},
         )
     }
