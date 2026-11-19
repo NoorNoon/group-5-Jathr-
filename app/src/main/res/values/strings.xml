@@ -69,4 +69,5 @@
     <string name="save_availability_button">حفظ الأوقات</string>
     <string name="no_availability_times">لا توجد أوقات محددة بعد</string>
     <string name="shared_followup_log">سجل المتابعات المشترك</string>
+    <string name="specialist_availability_times">أوقات توفري</string>
 </resources>

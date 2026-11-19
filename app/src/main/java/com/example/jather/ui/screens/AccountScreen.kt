@@ -22,6 +22,7 @@ import com.example.jather.R
 import com.example.jather.ui.theme.*
 
 data class AccountUiState(
+    val isSpecialist: Boolean = false,
     val fullName: String = "",
     val email: String = "",
     val phone: String = "",
@@ -88,6 +89,31 @@ private val IconListHistory: ImageVector = ImageVector.Builder(
     }
 }.build()
 
+private val IconCalendar: ImageVector = ImageVector.Builder(
+    name = "Calendar",
+    defaultWidth = 24.dp,
+    defaultHeight = 24.dp,
+    viewportWidth = 24f,
+    viewportHeight = 24f
+).apply {
+    path(
+        stroke = SolidColor(Color.Black),
+        strokeLineWidth = 2f
+    ) {
+        moveTo(3f, 6f)
+        lineTo(21f, 6f)
+        lineTo(21f, 20f)
+        lineTo(3f, 20f)
+        close()
+        moveTo(3f, 10f)
+        lineTo(21f, 10f)
+        moveTo(8f, 3f)
+        lineTo(8f, 6f)
+        moveTo(16f, 3f)
+        lineTo(16f, 6f)
+    }
+}.build()
+
 private val IconChevronLeft: ImageVector = ImageVector.Builder(
     name = "ChevronLeft",
     defaultWidth = 24.dp,
@@ -115,6 +141,7 @@ fun AccountScreen(
     onMedicalFilesClick: () -> Unit,
     onNotificationsClick: () -> Unit,
     onFollowUpLogClick: () -> Unit,
+    onAvailabilityClick: () -> Unit = {},
     onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -213,7 +240,7 @@ fun AccountScreen(
                 }
             }
 
-            // 3. Card 1: Personal Information
+            // 3. Card 1: Personal Information (Client & Specialist)
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -310,77 +337,79 @@ fun AccountScreen(
                 }
             }
 
-            // 4. Card 2: Health Information
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface,
-                    ),
-                    border = BorderStroke(1.dp, JathrBorder),
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
+            // 4. Card 2: Health Information (Shown ONLY when !isSpecialist)
+            if (!uiState.isSpecialist) {
+                item {
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surface,
+                        ),
+                        border = BorderStroke(1.dp, JathrBorder),
                     ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
                         ) {
-                            Text(
-                                text = stringResource(R.string.health_info_section),
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
-                                color = JathrTextMain,
-                            )
-                            TextButton(onClick = onEditHealthClick) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
                                 Text(
-                                    text = stringResource(R.string.edit_button),
-                                    style = MaterialTheme.typography.bodyMedium,
+                                    text = stringResource(R.string.health_info_section),
+                                    style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.Bold,
-                                    color = JathrPrimary,
+                                    color = JathrTextMain,
                                 )
+                                TextButton(onClick = onEditHealthClick) {
+                                    Text(
+                                        text = stringResource(R.string.edit_button),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        fontWeight = FontWeight.Bold,
+                                        color = JathrPrimary,
+                                    )
+                                }
                             }
+
+                            Spacer(modifier = Modifier.height(6.dp))
+
+                            HealthInfoRow(
+                                label = stringResource(R.string.age_label),
+                                value = uiState.age,
+                            )
+                            HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
+
+                            HealthInfoRow(
+                                label = stringResource(R.string.height_weight_label),
+                                value = uiState.heightWeight,
+                            )
+                            HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
+
+                            HealthInfoRow(
+                                label = stringResource(R.string.goal_label),
+                                value = uiState.goal,
+                            )
+                            HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
+
+                            HealthInfoRow(
+                                label = stringResource(R.string.chronic_conditions_label),
+                                value = uiState.chronicConditions,
+                            )
+                            HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
+
+                            HealthInfoRow(
+                                label = stringResource(R.string.allergies_label),
+                                value = uiState.allergies,
+                            )
                         }
-
-                        Spacer(modifier = Modifier.height(6.dp))
-
-                        HealthInfoRow(
-                            label = stringResource(R.string.age_label),
-                            value = uiState.age,
-                        )
-                        HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
-
-                        HealthInfoRow(
-                            label = stringResource(R.string.height_weight_label),
-                            value = uiState.heightWeight,
-                        )
-                        HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
-
-                        HealthInfoRow(
-                            label = stringResource(R.string.goal_label),
-                            value = uiState.goal,
-                        )
-                        HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
-
-                        HealthInfoRow(
-                            label = stringResource(R.string.chronic_conditions_label),
-                            value = uiState.chronicConditions,
-                        )
-                        HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
-
-                        HealthInfoRow(
-                            label = stringResource(R.string.allergies_label),
-                            value = uiState.allergies,
-                        )
                     }
                 }
             }
 
-            // 5. Card 3: Clickable Rows
+            // 5. Card 3: Settings Rows (Client vs Specialist)
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -393,103 +422,177 @@ fun AccountScreen(
                     Column(
                         modifier = Modifier.fillMaxWidth(),
                     ) {
-                        // Row 1: Medical Files
-                        Surface(
-                            onClick = onMedicalFilesClick,
-                            color = Color.Transparent,
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.my_medical_files),
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    fontWeight = FontWeight.Medium,
-                                    color = JathrTextMain,
-                                )
-                                Text(
-                                    text = stringResource(R.string.files_count_format, uiState.medicalFilesCount),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = JathrTextSecondary,
-                                )
-                            }
-                        }
-
-                        HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
-
-                        // Row 2: Notifications
-                        Surface(
-                            onClick = onNotificationsClick,
-                            color = Color.Transparent,
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.notifications_title),
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    fontWeight = FontWeight.Medium,
-                                    color = JathrTextMain,
-                                )
-                                Text(
-                                    text = stringResource(R.string.notifications_count_format, uiState.newNotificationsCount),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = JathrTextSecondary,
-                                )
-                            }
-                        }
-
-                        HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
-
-                        // Row 3: Shared Follow-up Log
-                        Surface(
-                            onClick = {
-                                // TODO: logic - I will write it
-                                onFollowUpLogClick()
-                            },
-                            color = Color.Transparent,
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically,
+                        if (!uiState.isSpecialist) {
+                            // Client Row 1: Medical Files
+                            Surface(
+                                onClick = onMedicalFilesClick,
+                                color = Color.Transparent,
                             ) {
                                 Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
                                     verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(10.dp),
                                 ) {
-                                    // TODO: icon
-                                    Icon(
-                                        imageVector = IconListHistory,
-                                        contentDescription = stringResource(R.string.shared_followup_log),
-                                        tint = JathrPrimary,
-                                        modifier = Modifier.size(20.dp),
-                                    )
                                     Text(
-                                        text = stringResource(R.string.shared_followup_log),
+                                        text = stringResource(R.string.my_medical_files),
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontWeight = FontWeight.Medium,
                                         color = JathrTextMain,
                                     )
+                                    Text(
+                                        text = stringResource(R.string.files_count_format, uiState.medicalFilesCount),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = JathrTextSecondary,
+                                    )
                                 }
+                            }
 
-                                // TODO: icon
-                                Icon(
-                                    imageVector = IconChevronLeft,
-                                    contentDescription = stringResource(R.string.shared_followup_log),
-                                    tint = JathrTextSecondary,
-                                    modifier = Modifier.size(20.dp),
-                                )
+                            HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
+
+                            // Client Row 2: Notifications
+                            Surface(
+                                onClick = onNotificationsClick,
+                                color = Color.Transparent,
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Text(
+                                        text = stringResource(R.string.notifications_title),
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        fontWeight = FontWeight.Medium,
+                                        color = JathrTextMain,
+                                    )
+                                    Text(
+                                        text = stringResource(R.string.notifications_count_format, uiState.newNotificationsCount),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = JathrTextSecondary,
+                                    )
+                                }
+                            }
+
+                            HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
+
+                            // Client Row 3: Shared Follow-up Log
+                            Surface(
+                                onClick = {
+                                    // TODO: logic - I will write it
+                                    onFollowUpLogClick()
+                                },
+                                color = Color.Transparent,
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                    ) {
+                                        // TODO: icon
+                                        Icon(
+                                            imageVector = IconListHistory,
+                                            contentDescription = stringResource(R.string.shared_followup_log),
+                                            tint = JathrPrimary,
+                                            modifier = Modifier.size(20.dp),
+                                        )
+                                        Text(
+                                            text = stringResource(R.string.shared_followup_log),
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            fontWeight = FontWeight.Medium,
+                                            color = JathrTextMain,
+                                        )
+                                    }
+
+                                    // TODO: icon
+                                    Icon(
+                                        imageVector = IconChevronLeft,
+                                        contentDescription = stringResource(R.string.shared_followup_log),
+                                        tint = JathrTextSecondary,
+                                        modifier = Modifier.size(20.dp),
+                                    )
+                                }
+                            }
+                        } else {
+                            // Specialist Row 1: Notifications
+                            Surface(
+                                onClick = onNotificationsClick,
+                                color = Color.Transparent,
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Text(
+                                        text = stringResource(R.string.notifications_title),
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        fontWeight = FontWeight.Medium,
+                                        color = JathrTextMain,
+                                    )
+                                    Text(
+                                        text = stringResource(R.string.notifications_count_format, uiState.newNotificationsCount),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = JathrTextSecondary,
+                                    )
+                                }
+                            }
+
+                            HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
+
+                            // Specialist Row 2: Availability Times
+                            Surface(
+                                onClick = {
+                                    // TODO: logic - I will write it
+                                    onAvailabilityClick()
+                                },
+                                color = Color.Transparent,
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                    ) {
+                                        // TODO: icon
+                                        Icon(
+                                            imageVector = IconCalendar,
+                                            contentDescription = stringResource(R.string.specialist_availability_times),
+                                            tint = JathrPrimary,
+                                            modifier = Modifier.size(20.dp),
+                                        )
+                                        Text(
+                                            text = stringResource(R.string.specialist_availability_times),
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            fontWeight = FontWeight.Medium,
+                                            color = JathrTextMain,
+                                        )
+                                    }
+
+                                    // TODO: icon
+                                    Icon(
+                                        imageVector = IconChevronLeft,
+                                        contentDescription = stringResource(R.string.specialist_availability_times),
+                                        tint = JathrTextSecondary,
+                                        modifier = Modifier.size(20.dp),
+                                    )
+                                }
                             }
                         }
                     }
@@ -559,6 +662,7 @@ fun AccountScreenSamplePreview() {
     JatherTheme {
         AccountScreen(
             uiState = AccountUiState(
+                isSpecialist = false,
                 fullName = "سارة العنزي",
                 email = "sarah@example.com",
                 phone = "0512345678",
@@ -577,6 +681,32 @@ fun AccountScreenSamplePreview() {
             onMedicalFilesClick = {},
             onNotificationsClick = {},
             onFollowUpLogClick = {},
+            onAvailabilityClick = {},
+            onLogoutClick = {},
+        )
+    }
+}
+
+@Preview(showBackground = true, locale = "ar", heightDp = 1100)
+@Composable
+fun AccountSpecialistPreview() {
+    JatherTheme {
+        AccountScreen(
+            uiState = AccountUiState(
+                isSpecialist = true,
+                fullName = "د. سارة التميمي",
+                email = "sara@example.com",
+                phone = "0559876543",
+                newNotificationsCount = 2,
+            ),
+            onFullNameChange = {},
+            onPhoneChange = {},
+            onSaveClick = {},
+            onEditHealthClick = {},
+            onMedicalFilesClick = {},
+            onNotificationsClick = {},
+            onFollowUpLogClick = {},
+            onAvailabilityClick = {},
             onLogoutClick = {},
         )
     }
@@ -595,6 +725,7 @@ fun AccountScreenEmptyPreview() {
             onMedicalFilesClick = {},
             onNotificationsClick = {},
             onFollowUpLogClick = {},
+            onAvailabilityClick = {},
             onLogoutClick = {},
         )
     }
