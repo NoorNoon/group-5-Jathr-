@@ -20,4 +20,19 @@
     <string name="years_of_experience_label">سنوات الخبرة</string>
     <string name="workplace_label">جهة العمل (اختياري)</string>
     <string name="back_button_desc">رجوع</string>
+    <string name="account_title">الحساب</string>
+    <string name="personal_info_section">المعلومات الشخصية</string>
+    <string name="health_info_section">المعلومات الصحية</string>
+    <string name="edit_button">تعديل</string>
+    <string name="age_label">العمر</string>
+    <string name="height_weight_label">الطول / الوزن</string>
+    <string name="goal_label">الهدف</string>
+    <string name="chronic_conditions_label">الحالات المزمنة</string>
+    <string name="allergies_label">الحساسية</string>
+    <string name="my_medical_files">ملفاتي الطبية</string>
+    <string name="notifications_title">الإشعارات</string>
+    <string name="logout_button">تسجيل الخروج</string>
+    <string name="files_count_format">%d ملفات</string>
+    <string name="notifications_count_format">%d جديدة</string>
+    <string name="notifications_desc">الإشعارات</string>
 </resources>
