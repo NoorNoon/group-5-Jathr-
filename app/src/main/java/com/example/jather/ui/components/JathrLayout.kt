@@ -35,6 +35,7 @@ fun JathrScaffold(
     navController: NavController,
     showBackButton: Boolean = true,
     showBottomBar: Boolean = true,
+    onBackClick: (() -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit
 ) {
     val navBackStackEntry = navController.currentBackStackEntryAsState()
@@ -68,7 +69,7 @@ fun JathrScaffold(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = JathrPrimary),
                 navigationIcon = {
                     if (showBackButton && currentRoute != Screen.Home.route && currentRoute != Screen.Start.route) {
-                        TextButton(onClick = { navController.popBackStack() }) {
+                        TextButton(onClick = { if (onBackClick != null) onBackClick() else navController.popBackStack() }) {
                             Text("عودة", color = Color.White, fontWeight = FontWeight.Bold)
                         }
                     }
