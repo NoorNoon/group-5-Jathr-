@@ -1,6 +1,5 @@
 package com.example.jather.ui.screens
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -28,6 +27,10 @@ data class EditProfileUiState(
     val gender: String = "",
     val birthDate: String = "",
     val heightCm: String = "",
+    val weightKg: String = "",
+    val goal: String = "",
+    val chronicConditions: String = "",
+    val allergies: String = "",
     val specialization: String = "",
     val qualification: String = "",
     val certificates: String = "",
@@ -175,23 +178,6 @@ private val IconCalendarDate: ImageVector = ImageVector.Builder(
     }
 }.build()
 
-private val IconDownChevron: ImageVector = ImageVector.Builder(
-    name = "DownChevron",
-    defaultWidth = 24.dp,
-    defaultHeight = 24.dp,
-    viewportWidth = 24f,
-    viewportHeight = 24f
-).apply {
-    path(
-        stroke = SolidColor(Color.Black),
-        strokeLineWidth = 2f
-    ) {
-        moveTo(6f, 9f)
-        lineTo(12f, 15f)
-        lineTo(18f, 9f)
-    }
-}.build()
-
 private val IconCheckMark: ImageVector = ImageVector.Builder(
     name = "CheckMark",
     defaultWidth = 24.dp,
@@ -212,20 +198,25 @@ private val IconCheckMark: ImageVector = ImageVector.Builder(
 @Composable
 fun EditProfileScreen(
     uiState: EditProfileUiState,
-    onRoleSelected: (Boolean) -> Unit,
-    onFullNameChange: (String) -> Unit,
-    onPhoneChange: (String) -> Unit,
-    onEmailChange: (String) -> Unit,
-    onGenderClick: () -> Unit,
-    onBirthDateChange: (String) -> Unit,
-    onHeightChange: (String) -> Unit,
-    onSpecializationChange: (String) -> Unit,
-    onQualificationChange: (String) -> Unit,
-    onCertificatesChange: (String) -> Unit,
-    onYearsChange: (String) -> Unit,
-    onWorkplaceChange: (String) -> Unit,
-    onSave: () -> Unit,
-    onBackClick: () -> Unit,
+    onRoleSelected: (Boolean) -> Unit = {},
+    onFullNameChange: (String) -> Unit = {},
+    onPhoneChange: (String) -> Unit = {},
+    onEmailChange: (String) -> Unit = {},
+    onGenderSelected: (String) -> Unit = {},
+    onGenderClick: () -> Unit = {},
+    onBirthDateChange: (String) -> Unit = {},
+    onHeightChange: (String) -> Unit = {},
+    onWeightChange: (String) -> Unit = {},
+    onGoalChange: (String) -> Unit = {},
+    onChronicConditionsChange: (String) -> Unit = {},
+    onAllergiesChange: (String) -> Unit = {},
+    onSpecializationChange: (String) -> Unit = {},
+    onQualificationChange: (String) -> Unit = {},
+    onCertificatesChange: (String) -> Unit = {},
+    onYearsChange: (String) -> Unit = {},
+    onWorkplaceChange: (String) -> Unit = {},
+    onSave: () -> Unit = {},
+    onBackClick: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -416,42 +407,83 @@ fun EditProfileScreen(
                     )
                 }
                 item {
-                    // TODO: logic - I will write it
-                    Surface(
-                        onClick = onGenderClick,
+                    Column(
                         modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(14.dp),
-                        color = MaterialTheme.colorScheme.surface,
-                        border = BorderStroke(1.dp, JathrBorder),
+                        verticalArrangement = Arrangement.spacedBy(6.dp),
                     ) {
+                        Text(
+                            text = stringResource(R.string.gender_label),
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = JathrTextMain,
+                        )
+
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 14.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween,
+                                .background(
+                                    color = MaterialTheme.colorScheme.surface,
+                                    shape = RoundedCornerShape(12.dp),
+                                )
+                                .padding(4.dp),
+                            horizontalArrangement = Arrangement.spacedBy(4.dp),
                         ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            val femaleText = stringResource(R.string.gender_picker_female)
+                            val maleText = stringResource(R.string.gender_picker_male)
+
+                            val isFemaleSelected = uiState.gender == femaleText || uiState.gender == "أنثى"
+                            val isMaleSelected = uiState.gender == maleText || uiState.gender == "ذكر"
+
+                            // Female Button
+                            Surface(
+                                onClick = {
+                                    // TODO: logic - I will write it
+                                    onGenderSelected(femaleText)
+                                    onGenderClick()
+                                },
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(44.dp),
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (isFemaleSelected) JathrPrimary else JathrBorder.copy(alpha = 0.3f),
                             ) {
-                                Icon(
-                                    imageVector = IconPersonUser,
-                                    contentDescription = stringResource(R.string.gender_label),
-                                    tint = JathrPrimary,
-                                    modifier = Modifier.size(20.dp),
-                                )
-                                Text(
-                                    text = uiState.gender.ifEmpty { stringResource(R.string.gender_label) },
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    color = JathrTextMain,
-                                )
+                                Box(
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    Text(
+                                        text = femaleText,
+                                        style = MaterialTheme.typography.titleMedium,
+                                        fontWeight = FontWeight.Bold,
+                                        color = if (isFemaleSelected) MaterialTheme.colorScheme.onPrimary else JathrTextSecondary,
+                                    )
+                                }
                             }
-                            Icon(
-                                imageVector = IconDownChevron,
-                                contentDescription = stringResource(R.string.gender_label),
-                                tint = JathrTextSecondary,
-                            )
+
+                            // Male Button
+                            Surface(
+                                onClick = {
+                                    // TODO: logic - I will write it
+                                    onGenderSelected(maleText)
+                                    onGenderClick()
+                                },
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(44.dp),
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (isMaleSelected) JathrPrimary else JathrBorder.copy(alpha = 0.3f),
+                            ) {
+                                Box(
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    Text(
+                                        text = maleText,
+                                        style = MaterialTheme.typography.titleMedium,
+                                        fontWeight = FontWeight.Bold,
+                                        color = if (isMaleSelected) MaterialTheme.colorScheme.onPrimary else JathrTextSecondary,
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -468,6 +500,48 @@ fun EditProfileScreen(
                         value = uiState.heightCm,
                         onValueChange = onHeightChange,
                         labelRes = R.string.height_label,
+                        icon = IconPersonUser,
+                    )
+                }
+                item {
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = stringResource(R.string.health_info_section),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = JathrTextMain,
+                        modifier = Modifier.padding(vertical = 4.dp),
+                    )
+                }
+                item {
+                    EditProfileField(
+                        value = uiState.weightKg,
+                        onValueChange = onWeightChange,
+                        labelRes = R.string.weight_label,
+                        icon = IconPersonUser,
+                    )
+                }
+                item {
+                    EditProfileField(
+                        value = uiState.goal,
+                        onValueChange = onGoalChange,
+                        labelRes = R.string.goal_label,
+                        icon = IconPersonUser,
+                    )
+                }
+                item {
+                    EditProfileField(
+                        value = uiState.chronicConditions,
+                        onValueChange = onChronicConditionsChange,
+                        labelRes = R.string.chronic_conditions_label,
+                        icon = IconPersonUser,
+                    )
+                }
+                item {
+                    EditProfileField(
+                        value = uiState.allergies,
+                        onValueChange = onAllergiesChange,
+                        labelRes = R.string.allergies_label,
                         icon = IconPersonUser,
                     )
                 }
@@ -625,17 +699,25 @@ fun EditProfileScreenClientPreview() {
                 fullName = "أحمد محمد",
                 phone = "0501234567",
                 email = "ahmad@example.com",
-                gender = "ذكر",
+                gender = "أنثى",
                 birthDate = "1995/04/12",
                 heightCm = "175",
+                weightKg = "70.2",
+                goal = "إنقاص الوزن",
+                chronicConditions = "ضغط الدم",
+                allergies = "الفول السوداني",
             ),
             onRoleSelected = {},
             onFullNameChange = {},
             onPhoneChange = {},
             onEmailChange = {},
-            onGenderClick = {},
+            onGenderSelected = {},
             onBirthDateChange = {},
             onHeightChange = {},
+            onWeightChange = {},
+            onGoalChange = {},
+            onChronicConditionsChange = {},
+            onAllergiesChange = {},
             onSpecializationChange = {},
             onQualificationChange = {},
             onCertificatesChange = {},
@@ -667,9 +749,13 @@ fun EditProfileScreenSpecialistPreview() {
             onFullNameChange = {},
             onPhoneChange = {},
             onEmailChange = {},
-            onGenderClick = {},
+            onGenderSelected = {},
             onBirthDateChange = {},
             onHeightChange = {},
+            onWeightChange = {},
+            onGoalChange = {},
+            onChronicConditionsChange = {},
+            onAllergiesChange = {},
             onSpecializationChange = {},
             onQualificationChange = {},
             onCertificatesChange = {},

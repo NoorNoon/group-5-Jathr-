@@ -61,7 +61,7 @@
     <string name="no_specialist_notes">لا توجد ملاحظات من الأخصائي</string>
     <string name="no_weight_data">لا توجد بيانات وزن بعد</string>
     <string name="no_progress_data">لا توجد بيانات تقدم بعد</string>
-    <string name="availability_title">أوقات توفر الأخصائي</string>
+    <string name="availability_title">أوقات توفر الأخصائي الأسبوعية</string>
     <string name="day_available_format">%s | متاح</string>
     <string name="day_unavailable_format">%s | غير متاح</string>
     <string name="time_range_label">وقت البداية والنهاية</string>
@@ -70,4 +70,21 @@
     <string name="no_availability_times">لا توجد أوقات محددة بعد</string>
     <string name="shared_followup_log">سجل المتابعات المشترك</string>
     <string name="specialist_availability_times">أوقات توفري</string>
+    <string name="weight_label">الوزن (كجم)</string>
+    <string name="professional_info_section">المعلومات المهنية</string>
+    <string name="qualification_short_label">المؤهل</string>
+    <string name="certificates_short_label">الشهادات</string>
+    <string name="workplace_short_label">مكان العمل</string>
+    <string name="gender_picker_title">اختاري الجنس</string>
+    <string name="gender_picker_female">أنثى</string>
+    <string name="gender_picker_male">ذكر</string>
+    <string name="time_from_label">من</string>
+    <string name="time_to_label">إلى</string>
+    <string name="day_sunday">الأحد</string>
+    <string name="day_monday">الاثنين</string>
+    <string name="day_tuesday">الثلاثاء</string>
+    <string name="day_wednesday">الأربعاء</string>
+    <string name="day_thursday">الخميس</string>
+    <string name="day_friday">الجمعة</string>
+    <string name="day_saturday">السبت</string>
 </resources>

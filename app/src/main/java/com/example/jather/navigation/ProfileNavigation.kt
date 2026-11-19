@@ -1,9 +1,16 @@
 package com.example.jather.navigation
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.example.jather.ui.components.JathrScaffold
 import com.example.jather.ui.screens.AccountScreen
 import com.example.jather.ui.screens.AccountUiState
 import com.example.jather.ui.screens.AvailabilityScreen
@@ -12,6 +19,9 @@ import com.example.jather.ui.screens.EditProfileScreen
 import com.example.jather.ui.screens.EditProfileUiState
 import com.example.jather.ui.screens.SharedHomeScreen
 import com.example.jather.ui.screens.SharedHomeUiState
+import androidx.compose.ui.res.stringResource
+import com.example.jather.R
+import com.example.jather.ui.screens.DayAvailabilityUi
 
 // ---------- Navigation functions ----------
 
@@ -26,73 +36,146 @@ fun NavController.navigateToBookAppointment() = navigate(Screen.BookAppointment.
 
 // ---------- Routes (navigation only; state and logic come in the next phase) ----------
 
+// TODO: logic - I will write it (temporary demo role; replace with the real role from Firestore/ViewModel)
+private var demoIsSpecialist by mutableStateOf(false)
+
 @Composable
 private fun SharedHomeRoute(navController: NavController) {
-    SharedHomeScreen(
-        uiState = SharedHomeUiState(),
-        onRoleSelected = {}, // TODO: logic - I will write it
-        onNotificationsClick = { navController.navigateToNotifications() },
-        onNextAppointmentClick = {}, // TODO: logic - I will write it
-        onViewPlanClick = { navController.navigateToNutritionPlan() },
-        onViewProgressClick = { navController.navigateToProgress() },
-        onBookAppointmentClick = { navController.navigateToBookAppointment() },
-        onFilesClick = { navController.navigateToMedicalFiles() },
-        onFollowUpClick = { navController.navigateToWeeklyFollowUp() },
-        onViewScheduleClick = {}, // TODO: logic - I will write it
-        onViewAllFollowUpsClick = { navController.navigateToWeeklyFollowUp() },
-        onAppointmentClick = {}, // TODO: logic - I will write it
-        onFollowUpItemClick = {} // TODO: logic - I will write it
-    )
+    // TODO: logic - I will write it (replace with ViewModel and real role from Firestore)
+    var uiState by remember { mutableStateOf(SharedHomeUiState()) }
+
+    JathrScaffold(title = "", navController = navController, showTopBar = false) { padding ->
+        SharedHomeScreen(
+            uiState = uiState,
+            onRoleSelected = { isSpecialist ->
+                demoIsSpecialist = isSpecialist
+                uiState = uiState.copy(isSpecialist = isSpecialist)
+            },
+            onNotificationsClick = { navController.navigateToNotifications() },
+            onNextAppointmentClick = {}, // TODO: logic - I will write it
+            onViewPlanClick = { navController.navigateToNutritionPlan() },
+            onViewProgressClick = { navController.navigateToProgress() },
+            onBookAppointmentClick = { navController.navigateToBookAppointment() },
+            onFilesClick = { navController.navigateToMedicalFiles() },
+            onFollowUpClick = { navController.navigateToWeeklyFollowUp() },
+            onViewScheduleClick = {}, // TODO: logic - I will write it
+            onViewAllFollowUpsClick = { navController.navigateToWeeklyFollowUp() },
+            onAppointmentClick = {}, // TODO: logic - I will write it
+            onFollowUpItemClick = {}, // TODO: logic - I will write it
+            modifier = Modifier.padding(padding)
+        )
+    }
 }
 
 @Composable
 private fun AccountRoute(navController: NavController) {
-    AccountScreen(
-        uiState = AccountUiState(),
-        onFullNameChange = {}, // TODO: logic - I will write it
-        onPhoneChange = {}, // TODO: logic - I will write it
-        onSaveClick = {}, // TODO: logic - I will write it
-        onEditHealthClick = { navController.navigateToEditProfile() },
-        onMedicalFilesClick = { navController.navigateToMedicalFiles() },
-        onNotificationsClick = { navController.navigateToNotifications() },
-        onFollowUpLogClick = { navController.navigateToWeeklyFollowUp() },
-        onAvailabilityClick = { navController.navigateToAvailability() },
-        onLogoutClick = {
-            navController.navigate(Screen.Login.route) { popUpTo(0) }
-        }
-    )
-}
+    // TODO: logic - I will write it (replace with ViewModel and real user data from Firestore)
+    var uiState by remember { mutableStateOf(AccountUiState()) }
 
+    JathrScaffold(title = "", navController = navController, showTopBar = false) { padding ->
+        AccountScreen(
+            uiState = uiState.copy(isSpecialist = demoIsSpecialist),
+            onFullNameChange = { uiState = uiState.copy(fullName = it) },
+            onPhoneChange = { uiState = uiState.copy(phone = it) },
+            onSaveClick = {}, // TODO: logic - I will write it
+            onEditHealthClick = { navController.navigateToEditProfile() },
+            onEditProfessionalClick = { navController.navigateToEditProfile() },
+            onMedicalFilesClick = { navController.navigateToMedicalFiles() },
+            onNotificationsClick = { navController.navigateToNotifications() },
+            onFollowUpLogClick = { navController.navigateToWeeklyFollowUp() },
+            onAvailabilityClick = { navController.navigateToAvailability() },
+            onLogoutClick = {
+                navController.navigate(Screen.Login.route) { popUpTo(0) }
+            },
+            modifier = Modifier.padding(padding)
+        )
+    }
+}
 @Composable
 private fun EditProfileRoute(navController: NavController) {
-    EditProfileScreen(
-        uiState = EditProfileUiState(),
-        onRoleSelected = {}, // TODO: logic - I will write it
-        onFullNameChange = {}, // TODO: logic - I will write it
-        onPhoneChange = {}, // TODO: logic - I will write it
-        onEmailChange = {}, // TODO: logic - I will write it
-        onGenderClick = {}, // TODO: logic - I will write it
-        onBirthDateChange = {}, // TODO: logic - I will write it
-        onHeightChange = {}, // TODO: logic - I will write it
-        onSpecializationChange = {}, // TODO: logic - I will write it
-        onQualificationChange = {}, // TODO: logic - I will write it
-        onCertificatesChange = {}, // TODO: logic - I will write it
-        onYearsChange = {}, // TODO: logic - I will write it
-        onWorkplaceChange = {}, // TODO: logic - I will write it
-        onSave = { navController.popBackStack() },
-        onBackClick = { navController.popBackStack() }
-    )
-}
+    // TODO: logic - I will write it (replace with ViewModel, validation and saving to Firestore)
+    var uiState by remember {
+        mutableStateOf(EditProfileUiState(isSpecialist = demoIsSpecialist))
+    }
 
+    JathrScaffold(
+        title = "", navController = navController,
+        showTopBar = false, showBottomBar = false
+    ) { padding ->
+        EditProfileScreen(
+            uiState = uiState,
+            onRoleSelected = { isSpecialist -> uiState = uiState.copy(isSpecialist = isSpecialist) },
+            onFullNameChange = { uiState = uiState.copy(fullName = it) },
+            onPhoneChange = { uiState = uiState.copy(phone = it) },
+            onEmailChange = { uiState = uiState.copy(email = it) },
+            onGenderSelected = { uiState = uiState.copy(gender = it) },
+            onBirthDateChange = { uiState = uiState.copy(birthDate = it) },
+            onHeightChange = { uiState = uiState.copy(heightCm = it) },
+            onSpecializationChange = { uiState = uiState.copy(specialization = it) },
+            onQualificationChange = { uiState = uiState.copy(qualification = it) },
+            onCertificatesChange = { uiState = uiState.copy(certificates = it) },
+            onYearsChange = { uiState = uiState.copy(yearsOfExperience = it) },
+            onWorkplaceChange = { uiState = uiState.copy(workplace = it) },
+            onWeightChange = { uiState = uiState.copy(weightKg = it) },
+            onGoalChange = { uiState = uiState.copy(goal = it) },
+            onChronicConditionsChange = { uiState = uiState.copy(chronicConditions = it) },
+            onAllergiesChange = { uiState = uiState.copy(allergies = it) },
+            onSave = { navController.popBackStack() }, // TODO: logic - I will write it (save first)
+            onBackClick = { navController.popBackStack() },
+            modifier = Modifier.padding(padding)
+        )
+    }
+}
 @Composable
 private fun AvailabilityRoute(navController: NavController) {
-    AvailabilityScreen(
-        uiState = AvailabilityUiState(),
-        onBackClick = { navController.popBackStack() },
-        onDayClick = {}, // TODO: logic - I will write it
-        onTimeRangeClick = {}, // TODO: logic - I will write it
-        onSaveClick = { navController.popBackStack() }
+    // TODO: logic - I will write it (replace with ViewModel, real data from Firestore and saving)
+    val dayLabels = listOf(
+        stringResource(R.string.day_sunday),
+        stringResource(R.string.day_monday),
+        stringResource(R.string.day_tuesday),
+        stringResource(R.string.day_wednesday),
+        stringResource(R.string.day_thursday),
+        stringResource(R.string.day_friday),
+        stringResource(R.string.day_saturday)
     )
+    var uiState by remember {
+        mutableStateOf(
+            AvailabilityUiState(
+                days = dayLabels.mapIndexed { index, label ->
+                    DayAvailabilityUi(id = index.toString(), dayLabel = label)
+                }
+            )
+        )
+    }
+
+    JathrScaffold(
+        title = "", navController = navController,
+        showTopBar = false, showBottomBar = false
+    ) { padding ->
+        AvailabilityScreen(
+            uiState = uiState,
+            onBackClick = { navController.popBackStack() },
+            onDayToggle = { id ->
+                uiState = uiState.copy(
+                    days = uiState.days.map {
+                        if (it.id == id) it.copy(isAvailable = !it.isAvailable) else it
+                    }
+                )
+            },
+            onStartTimeSelected = { id, time ->
+                uiState = uiState.copy(
+                    days = uiState.days.map { if (it.id == id) it.copy(startTime = time) else it }
+                )
+            },
+            onEndTimeSelected = { id, time ->
+                uiState = uiState.copy(
+                    days = uiState.days.map { if (it.id == id) it.copy(endTime = time) else it }
+                )
+            },
+            onSaveClick = { navController.popBackStack() }, // TODO: logic - I will write it (save first)
+            modifier = Modifier.padding(padding)
+        )
+    }
 }
 
 // ---------- Graph ----------

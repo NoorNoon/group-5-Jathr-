@@ -31,6 +31,11 @@ data class AccountUiState(
     val goal: String = "",
     val chronicConditions: String = "",
     val allergies: String = "",
+    val specialization: String = "",
+    val qualification: String = "",
+    val certificates: String = "",
+    val yearsOfExperience: String = "",
+    val workplace: String = "",
     val medicalFilesCount: Int = 0,
     val newNotificationsCount: Int = 0,
 )
@@ -138,6 +143,7 @@ fun AccountScreen(
     onPhoneChange: (String) -> Unit,
     onSaveClick: () -> Unit,
     onEditHealthClick: () -> Unit,
+    onEditProfessionalClick: () -> Unit = {},
     onMedicalFilesClick: () -> Unit,
     onNotificationsClick: () -> Unit,
     onFollowUpLogClick: () -> Unit,
@@ -409,7 +415,84 @@ fun AccountScreen(
                 }
             }
 
-            // 5. Card 3: Settings Rows (Client vs Specialist)
+            // 5. Card 2 (Specialist): Professional Information (Shown ONLY when isSpecialist)
+            if (uiState.isSpecialist) {
+                item {
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surface,
+                        ),
+                        border = BorderStroke(1.dp, JathrBorder),
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.professional_info_section),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    color = JathrTextMain,
+                                )
+                                TextButton(
+                                    onClick = {
+                                        // TODO: logic - I will write it
+                                        onEditProfessionalClick()
+                                    },
+                                ) {
+                                    Text(
+                                        text = stringResource(R.string.edit_button),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        fontWeight = FontWeight.Bold,
+                                        color = JathrPrimary,
+                                    )
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(6.dp))
+
+                            HealthInfoRow(
+                                label = stringResource(R.string.specialization_label),
+                                value = uiState.specialization,
+                            )
+                            HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
+
+                            HealthInfoRow(
+                                label = stringResource(R.string.qualification_short_label),
+                                value = uiState.qualification,
+                            )
+                            HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
+
+                            HealthInfoRow(
+                                label = stringResource(R.string.certificates_short_label),
+                                value = uiState.certificates,
+                            )
+                            HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
+
+                            HealthInfoRow(
+                                label = stringResource(R.string.years_of_experience_label),
+                                value = uiState.yearsOfExperience,
+                            )
+                            HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
+
+                            HealthInfoRow(
+                                label = stringResource(R.string.workplace_short_label),
+                                value = uiState.workplace,
+                            )
+                        }
+                    }
+                }
+            }
+
+            // 6. Card 3: Settings Rows (Client vs Specialist)
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -599,7 +682,7 @@ fun AccountScreen(
                 }
             }
 
-            // 6. Logout Button
+            // 7. Logout Button
             item {
                 // TODO: logic - I will write it
                 OutlinedCard(
@@ -678,6 +761,7 @@ fun AccountScreenSamplePreview() {
             onPhoneChange = {},
             onSaveClick = {},
             onEditHealthClick = {},
+            onEditProfessionalClick = {},
             onMedicalFilesClick = {},
             onNotificationsClick = {},
             onFollowUpLogClick = {},
@@ -697,12 +781,18 @@ fun AccountSpecialistPreview() {
                 fullName = "د. سارة التميمي",
                 email = "sara@example.com",
                 phone = "0559876543",
+                specialization = "تغذية علاجية",
+                qualification = "بكالوريوس علوم التغذية",
+                certificates = "شهادة هيئة التخصصات الصحية",
+                yearsOfExperience = "5 سنوات",
+                workplace = "مستشفى الملك فيصل",
                 newNotificationsCount = 2,
             ),
             onFullNameChange = {},
             onPhoneChange = {},
             onSaveClick = {},
             onEditHealthClick = {},
+            onEditProfessionalClick = {},
             onMedicalFilesClick = {},
             onNotificationsClick = {},
             onFollowUpLogClick = {},
@@ -722,6 +812,7 @@ fun AccountScreenEmptyPreview() {
             onPhoneChange = {},
             onSaveClick = {},
             onEditHealthClick = {},
+            onEditProfessionalClick = {},
             onMedicalFilesClick = {},
             onNotificationsClick = {},
             onFollowUpLogClick = {},

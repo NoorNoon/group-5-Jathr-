@@ -36,6 +36,7 @@ fun JathrScaffold(
     showBackButton: Boolean = true,
     showBottomBar: Boolean = true,
     onBackClick: (() -> Unit)? = null,
+    showTopBar: Boolean = true,
     content: @Composable (PaddingValues) -> Unit
 ) {
     val navBackStackEntry = navController.currentBackStackEntryAsState()
@@ -43,7 +44,7 @@ fun JathrScaffold(
 
     Scaffold(
         topBar = {
-            TopAppBar(
+            if (showTopBar) TopAppBar(
                 title = {
                     Row(
                         modifier = Modifier

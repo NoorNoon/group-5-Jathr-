@@ -4,7 +4,8 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -52,54 +53,6 @@ private val IconArrowBack: ImageVector = ImageVector.Builder(
     }
 }.build()
 
-private val IconCalendar: ImageVector = ImageVector.Builder(
-    name = "Calendar",
-    defaultWidth = 24.dp,
-    defaultHeight = 24.dp,
-    viewportWidth = 24f,
-    viewportHeight = 24f,
-).apply {
-    path(
-        stroke = SolidColor(Color.Black),
-        strokeLineWidth = 2f,
-    ) {
-        moveTo(3f, 6f)
-        lineTo(21f, 6f)
-        lineTo(21f, 20f)
-        lineTo(3f, 20f)
-        close()
-        moveTo(3f, 10f)
-        lineTo(21f, 10f)
-        moveTo(8f, 3f)
-        lineTo(8f, 6f)
-        moveTo(16f, 3f)
-        lineTo(16f, 6f)
-    }
-}.build()
-
-private val IconClock: ImageVector = ImageVector.Builder(
-    name = "Clock",
-    defaultWidth = 24.dp,
-    defaultHeight = 24.dp,
-    viewportWidth = 24f,
-    viewportHeight = 24f,
-).apply {
-    path(
-        stroke = SolidColor(Color.Black),
-        strokeLineWidth = 2f,
-    ) {
-        moveTo(12f, 22f)
-        curveTo(17.52f, 22f, 22f, 17.52f, 22f, 12f)
-        curveTo(22f, 6.48f, 17.52f, 2f, 12f, 2f)
-        curveTo(6.48f, 2f, 2f, 6.48f, 2f, 12f)
-        curveTo(2f, 17.52f, 6.48f, 22f, 12f, 22f)
-        close()
-        moveTo(12f, 6f)
-        lineTo(12f, 12f)
-        lineTo(16f, 14f)
-    }
-}.build()
-
 private val IconCheckMark: ImageVector = ImageVector.Builder(
     name = "CheckMark",
     defaultWidth = 24.dp,
@@ -117,13 +70,22 @@ private val IconCheckMark: ImageVector = ImageVector.Builder(
     }
 }.build()
 
+private val availableHours = listOf(
+    "06:00", "07:00", "08:00", "09:00", "10:00", "11:00",
+    "12:00", "13:00", "14:00", "15:00", "16:00", "17:00",
+    "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"
+)
+
 @Composable
 fun AvailabilityScreen(
     uiState: AvailabilityUiState,
-    onBackClick: () -> Unit,
-    onDayClick: (String) -> Unit,
-    onTimeRangeClick: (String) -> Unit,
-    onSaveClick: () -> Unit,
+    onBackClick: () -> Unit = {},
+    onDayToggle: (String) -> Unit = {},
+    onStartTimeSelected: (String, String) -> Unit = { _, _ -> },
+    onEndTimeSelected: (String, String) -> Unit = { _, _ -> },
+    onDayClick: (String) -> Unit = {},
+    onTimeRangeClick: (String) -> Unit = {},
+    onSaveClick: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -137,7 +99,7 @@ fun AvailabilityScreen(
             verticalArrangement = Arrangement.spacedBy(14.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            // 1. Top Row
+            // 1. Top Row (Back button + Logo)
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -185,175 +147,142 @@ fun AvailabilityScreen(
                 )
             }
 
-            // 3. Header Card
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = JathrLavender,
-                    ),
-                    border = BorderStroke(1.dp, JathrBorder),
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(18.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(14.dp),
+            // 3. Day Cards
+            if (uiState.days.isEmpty()) {
+                item {
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surface,
+                        ),
+                        border = BorderStroke(1.dp, JathrBorder),
                     ) {
-                        Box(
+                        Text(
+                            text = stringResource(R.string.no_availability_times),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = JathrTextSecondary,
+                            textAlign = TextAlign.Center,
                             modifier = Modifier
-                                .size(48.dp)
-                                .background(
-                                    color = MaterialTheme.colorScheme.surface,
-                                    shape = RoundedCornerShape(12.dp),
-                                ),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            // TODO: icon
-                            Icon(
-                                imageVector = IconCalendar,
-                                contentDescription = stringResource(R.string.availability_title),
-                                tint = JathrPrimary,
-                                modifier = Modifier.size(26.dp),
-                            )
-                        }
-
-                        Column {
-                            Text(
-                                text = stringResource(R.string.jathr_brand),
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
-                                color = JathrPrimary,
-                            )
-                            Spacer(modifier = Modifier.height(2.dp))
-                            Text(
-                                text = stringResource(R.string.availability_title),
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
-                                color = JathrTextMain,
-                            )
-                        }
+                                .fillMaxWidth()
+                                .padding(vertical = 24.dp),
+                        )
                     }
                 }
-            }
-
-            // 4. White Card Containing Rows
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface,
-                    ),
-                    border = BorderStroke(1.dp, JathrBorder),
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(10.dp),
+            } else {
+                items(uiState.days) { day ->
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surface,
+                        ),
+                        border = BorderStroke(1.dp, JathrBorder),
                     ) {
-                        if (uiState.days.isEmpty()) {
-                            Text(
-                                text = stringResource(R.string.no_availability_times),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = JathrTextSecondary,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 16.dp),
-                            )
-                        } else {
-                            uiState.days.forEach { day ->
-                                // Day Availability Status Row
-                                Surface(
-                                    onClick = { onDayClick(day.id) },
-                                    modifier = Modifier.fillMaxWidth(),
-                                    shape = RoundedCornerShape(14.dp),
-                                    color = MaterialTheme.colorScheme.surface,
-                                    border = BorderStroke(1.dp, JathrBorder),
-                                ) {
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(horizontal = 14.dp, vertical = 12.dp),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.SpaceBetween,
-                                    ) {
-                                        Text(
-                                            text = stringResource(
-                                                if (day.isAvailable) R.string.day_available_format
-                                                else R.string.day_unavailable_format,
-                                                day.dayLabel,
-                                            ),
-                                            style = MaterialTheme.typography.titleMedium,
-                                            fontWeight = FontWeight.Medium,
-                                            color = JathrTextMain,
-                                        )
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                        ) {
+                            // Day Row: Name on start (right in RTL), Switch on end (left in RTL)
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Text(
+                                    text = day.dayLabel,
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    color = JathrTextMain,
+                                )
 
-                                        Box(
-                                            modifier = Modifier
-                                                .size(36.dp)
-                                                .background(
-                                                    color = JathrLavender,
-                                                    shape = RoundedCornerShape(10.dp),
-                                                ),
-                                            contentAlignment = Alignment.Center,
-                                        ) {
-                                            // TODO: icon
-                                            Icon(
-                                                imageVector = IconCalendar,
-                                                contentDescription = day.dayLabel,
-                                                tint = JathrPrimary,
-                                                modifier = Modifier.size(20.dp),
-                                            )
+                                Switch(
+                                    checked = day.isAvailable,
+                                    onCheckedChange = {
+                                        // TODO: logic - I will write it
+                                        onDayToggle(day.id)
+                                        onDayClick(day.id)
+                                    },
+                                    colors = SwitchDefaults.colors(
+                                        checkedTrackColor = JathrPrimary,
+                                        checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
+                                        uncheckedTrackColor = JathrBorder.copy(alpha = 0.4f),
+                                    ),
+                                )
+                            }
+
+                            // When isAvailable == true: Time Pickers (LazyRow for "من" and "إلى")
+                            if (day.isAvailable) {
+                                HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
+
+                                // "من" (From)
+                                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                    Text(
+                                        text = stringResource(R.string.time_from_label),
+                                        style = MaterialTheme.typography.labelMedium,
+                                        color = JathrTextSecondary,
+                                    )
+
+                                    LazyRow(
+                                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                        contentPadding = PaddingValues(vertical = 2.dp),
+                                    ) {
+                                        items(availableHours) { time ->
+                                            val isSelected = day.startTime == time
+                                            Surface(
+                                                onClick = {
+                                                    // TODO: logic - I will write it
+                                                    onStartTimeSelected(day.id, time)
+                                                    onTimeRangeClick(day.id)
+                                                },
+                                                shape = RoundedCornerShape(10.dp),
+                                                color = if (isSelected) JathrPrimary else JathrBorder.copy(alpha = 0.3f),
+                                            ) {
+                                                Text(
+                                                    text = time,
+                                                    style = MaterialTheme.typography.labelMedium,
+                                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                                                    color = if (isSelected) MaterialTheme.colorScheme.onPrimary else JathrTextSecondary,
+                                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                                                )
+                                            }
                                         }
                                     }
                                 }
 
-                                // Time Range Row (when available)
-                                if (day.isAvailable) {
-                                    Surface(
-                                        onClick = { onTimeRangeClick(day.id) },
-                                        modifier = Modifier.fillMaxWidth(),
-                                        shape = RoundedCornerShape(14.dp),
-                                        color = MaterialTheme.colorScheme.surface,
-                                        border = BorderStroke(1.dp, JathrBorder),
-                                    ) {
-                                        Row(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(horizontal = 14.dp, vertical = 12.dp),
-                                            verticalAlignment = Alignment.CenterVertically,
-                                            horizontalArrangement = Arrangement.SpaceBetween,
-                                        ) {
-                                            Text(
-                                                text = if (day.startTime.isNotEmpty() && day.endTime.isNotEmpty()) {
-                                                    stringResource(R.string.time_range_format, stringResource(R.string.time_range_label), day.startTime, day.endTime)
-                                                } else {
-                                                    stringResource(R.string.time_range_label)
-                                                },
-                                                style = MaterialTheme.typography.bodyLarge,
-                                                color = JathrTextMain,
-                                            )
+                                Spacer(modifier = Modifier.height(2.dp))
 
-                                            Box(
-                                                modifier = Modifier
-                                                    .size(36.dp)
-                                                    .background(
-                                                        color = JathrLavender,
-                                                        shape = RoundedCornerShape(10.dp),
-                                                    ),
-                                                contentAlignment = Alignment.Center,
+                                // "إلى" (To)
+                                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                    Text(
+                                        text = stringResource(R.string.time_to_label),
+                                        style = MaterialTheme.typography.labelMedium,
+                                        color = JathrTextSecondary,
+                                    )
+
+                                    LazyRow(
+                                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                        contentPadding = PaddingValues(vertical = 2.dp),
+                                    ) {
+                                        items(availableHours) { time ->
+                                            val isSelected = day.endTime == time
+                                            Surface(
+                                                onClick = {
+                                                    // TODO: logic - I will write it
+                                                    onEndTimeSelected(day.id, time)
+                                                    onTimeRangeClick(day.id)
+                                                },
+                                                shape = RoundedCornerShape(10.dp),
+                                                color = if (isSelected) JathrPrimary else JathrBorder.copy(alpha = 0.3f),
                                             ) {
-                                                // TODO: icon
-                                                Icon(
-                                                    imageVector = IconClock,
-                                                    contentDescription = stringResource(R.string.time_range_label),
-                                                    tint = JathrPrimary,
-                                                    modifier = Modifier.size(20.dp),
+                                                Text(
+                                                    text = time,
+                                                    style = MaterialTheme.typography.labelMedium,
+                                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                                                    color = if (isSelected) MaterialTheme.colorScheme.onPrimary else JathrTextSecondary,
+                                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                                                 )
                                             }
                                         }
@@ -365,7 +294,7 @@ fun AvailabilityScreen(
                 }
             }
 
-            // 5. Save Button
+            // 4. Save Button
             item {
                 Spacer(modifier = Modifier.height(4.dp))
 
@@ -399,20 +328,6 @@ fun AvailabilityScreen(
                         )
                     }
                 }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // 6. Bottom Handle Pill
-                Box(
-                    modifier = Modifier
-                        .padding(bottom = 8.dp)
-                        .width(64.dp)
-                        .height(4.dp)
-                        .background(
-                            color = JathrBorder,
-                            shape = CircleShape,
-                        ),
-                )
             }
         }
     }
@@ -427,21 +342,49 @@ fun AvailabilityScreenSamplePreview() {
                 days = listOf(
                     DayAvailabilityUi(
                         id = "1",
-                        dayLabel = "الأحد",
+                        dayLabel = stringResource(R.string.day_sunday),
                         isAvailable = true,
                         startTime = "09:00",
                         endTime = "17:00",
                     ),
                     DayAvailabilityUi(
                         id = "2",
-                        dayLabel = "الاثنين",
+                        dayLabel = stringResource(R.string.day_monday),
+                        isAvailable = false,
+                    ),
+                    DayAvailabilityUi(
+                        id = "3",
+                        dayLabel = stringResource(R.string.day_tuesday),
+                        isAvailable = true,
+                        startTime = "09:00",
+                        endTime = "17:00",
+                    ),
+                    DayAvailabilityUi(
+                        id = "4",
+                        dayLabel = stringResource(R.string.day_wednesday),
+                        isAvailable = false,
+                    ),
+                    DayAvailabilityUi(
+                        id = "5",
+                        dayLabel = stringResource(R.string.day_thursday),
+                        isAvailable = false,
+                    ),
+                    DayAvailabilityUi(
+                        id = "6",
+                        dayLabel = stringResource(R.string.day_friday),
+                        isAvailable = false,
+                    ),
+                    DayAvailabilityUi(
+                        id = "7",
+                        dayLabel = stringResource(R.string.day_saturday),
                         isAvailable = false,
                     ),
                 ),
             ),
             onBackClick = {},
-            onDayClick = {},
-            onTimeRangeClick = {},
+            onDayToggle = {},
+            onStartTimeSelected = { _, _ -> },
+            onEndTimeSelected = { _, _ -> },
             onSaveClick = {},
         )
     }
@@ -454,8 +397,9 @@ fun AvailabilityScreenEmptyPreview() {
         AvailabilityScreen(
             uiState = AvailabilityUiState(),
             onBackClick = {},
-            onDayClick = {},
-            onTimeRangeClick = {},
+            onDayToggle = {},
+            onStartTimeSelected = { _, _ -> },
+            onEndTimeSelected = { _, _ -> },
             onSaveClick = {},
         )
     }
