@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">jather</string>
+    <string name="edit_profile_title">تعديل الملف الشخصي</string>
+    <string name="full_name_label">الاسم الكامل</string>
+    <string name="phone_label">رقم الجوال</string>
+    <string name="role_data_placeholder">البيانات حسب الدور</string>
+    <string name="save_changes_button">حفظ التغييرات</string>
+    <string name="back">عودة</string>
+    <string name="jathr_brand">جذر</string>
+    <string name="edit_profile_subtitle">قم بتحديث بيانات حسابك</string>
+    <string name="client_tab">عميل</string>
+    <string name="specialist_tab">الأخصائي</string>
+    <string name="email_label">البريد الإلكتروني</string>
+    <string name="gender_label">الجنس</string>
+    <string name="birth_date_label">تاريخ الميلاد (اختياري)</string>
+    <string name="height_label">الطول (سم)</string>
+    <string name="specialization_label">التخصص</string>
+    <string name="qualification_label">المؤهل العلمي</string>
+    <string name="certificates_label">الشهادات المهنية</string>
+    <string name="years_of_experience_label">سنوات الخبرة</string>
+    <string name="workplace_label">جهة العمل (اختياري)</string>
+    <string name="back_button_desc">رجوع</string>
 </resources>
