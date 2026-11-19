@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -234,29 +233,6 @@ fun EditProfileScreen(
             .fillMaxSize()
             .background(JathrLavender),
     ) {
-        // Decorative Soft Circle 1 (Top Corner 1)
-        Box(
-            modifier = Modifier
-                .offset(x = (-50).dp, y = (-50).dp)
-                .size(180.dp)
-                .background(
-                    color = JathrPrimary.copy(alpha = 0.08f),
-                    shape = CircleShape,
-                ),
-        )
-
-        // Decorative Soft Circle 2 (Top Corner 2)
-        Box(
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .offset(x = 50.dp, y = (-30).dp)
-                .size(200.dp)
-                .background(
-                    color = JathrPrimary.copy(alpha = 0.08f),
-                    shape = CircleShape,
-                ),
-        )
-
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(18.dp),
