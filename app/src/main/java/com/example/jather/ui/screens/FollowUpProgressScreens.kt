@@ -13,6 +13,8 @@ import com.example.jather.ui.components.JathrScaffold
 import com.example.jather.ui.theme.JathrPrimary
 import com.example.jather.ui.theme.JathrTextMain
 import com.example.jather.ui.theme.JathrTextSecondary
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun WeeklyFollowUpScreen(navController: NavController) {
@@ -69,8 +71,10 @@ fun ProgressScreen(navController: NavController) {
                     Text("الوزن الحالي: 74.5 كجم", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = JathrPrimary)
                     Spacer(modifier = Modifier.height(8.dp))
                     Text("إجمالي الفاقد: 3.5 كجم", fontSize = 14.sp, color = Color(0xFF2E7D32), fontWeight = FontWeight.SemiBold)
+
                 }
             }
         }
     }
 }
+

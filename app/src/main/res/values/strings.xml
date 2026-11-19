@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">jather</string>
+    <string name="spec_clients_title">العملاء</string>
+    <string name="spec_clients_subtitle">١٢ عميل تتابع حالاتهم</string>
+    <string name="spec_search_hint">ابحث باسم العميل</string>
+    <string name="spec_filter_all">الكل</string>
+    <string name="spec_filter_active">نشط</string>
+    <string name="spec_filter_followup">يحتاج متابعة</string>
+    <string name="spec_filter_completed">مكتمل</string>
+    <string name="spec_medical_files">الملفات الطبية</string>
+    <string name="spec_nutrition_assessment">التقييم الغذائي</string>
+    <string name="spec_analysis_review">مراجعة التحليل الطبي</string>
 </resources>
