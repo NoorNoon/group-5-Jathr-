@@ -41,7 +41,7 @@ sealed class Screen(val route: String) {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.Start.route) {
+    NavHost(navController = navController, startDestination = "client_medical_files") {
         composable(Screen.Start.route) { StartScreen(navController) }
         composable(Screen.Login.route) { LoginScreen(navController) }
         composable(Screen.SignUp.route) { SignUpScreen(navController) }
@@ -65,5 +65,6 @@ fun AppNavigation() {
         composable(Screen.RateSession.route) { RateSessionScreen(navController) }
         composable(Screen.Packages.route) { PackagesScreen(navController) }
         plansGraph(navController)
+        specialistGraph(navController)
     }
 }

@@ -56,3 +56,4 @@ fun AppointmentsScreen(navController: NavController) {
         }
     }
 }
+
