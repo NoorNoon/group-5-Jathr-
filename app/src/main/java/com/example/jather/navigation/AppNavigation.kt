@@ -27,6 +27,8 @@ sealed class Screen(val route: String) {
     object Notifications : Screen("notifications")
     object MedicalFiles : Screen("medical_files")
     object EditProfile : Screen("edit_profile")
+
+    object Availability : Screen("availability")
     object RateSession : Screen("rate_session")
     object Packages : Screen("packages")
     object NutritionPlans : Screen("nutrition_plans")
@@ -49,10 +51,8 @@ fun AppNavigation() {
         composable(Screen.AssessmentStep1.route) { AssessmentStep1Screen(navController) }
         composable(Screen.AssessmentStep2.route) { AssessmentStep2Screen(navController) }
         composable(Screen.AssessmentStep3.route) { AssessmentStep3Screen(navController) }
-        composable(Screen.Home.route) { HomeScreen(navController) }
         composable(Screen.Appointments.route) { AppointmentsScreen(navController) }
         composable(Screen.NutritionPlan.route) { NutritionPlanScreen(navController) }
-        composable(Screen.Profile.route) { ProfileScreen(navController) }
         composable(Screen.BookAppointment.route) { BookAppointmentScreen(navController) }
         composable(Screen.Payment.route) { PaymentScreen(navController) }
         composable(Screen.PaymentFailed.route) { PaymentFailedScreen(navController) }
@@ -61,10 +61,10 @@ fun AppNavigation() {
         composable(Screen.Progress.route) { ProgressScreen(navController) }
         composable(Screen.Notifications.route) { NotificationsScreen(navController) }
         composable(Screen.MedicalFiles.route) { MedicalFilesScreen(navController) }
-        composable(Screen.EditProfile.route) { EditProfileScreen(navController) }
         composable(Screen.RateSession.route) { RateSessionScreen(navController) }
         composable(Screen.Packages.route) { PackagesScreen(navController) }
         plansGraph(navController)
+        profileGraph(navController)
         specialistGraph(navController)
     }
 }

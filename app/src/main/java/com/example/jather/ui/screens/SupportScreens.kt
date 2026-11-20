@@ -73,26 +73,6 @@ fun EditProfileScreen(navController: NavController) {
 }
 
 @Composable
-fun PackagesScreen(navController: NavController) {
-    JathrScaffold(
-        title = "الباقات المتاحة",
-        navController = navController,
-        showBackButton = true,
-        showBottomBar = true
-    ) { innerPadding ->
-        Column(modifier = Modifier.fillMaxSize().padding(innerPadding).padding(16.dp)) {
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text("الباقة الشهرية المميزة", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = JathrPrimary)
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text("استشارات غير محدودة ومتابعة أسبوعية - 300 ريال/شهر", fontSize = 14.sp, color = JathrTextSecondary)
-                }
-            }
-        }
-    }
-}
-
-@Composable
 fun RateSessionScreen(navController: NavController) {
     JathrScaffold(
         title = "تقييم الجلسة",
