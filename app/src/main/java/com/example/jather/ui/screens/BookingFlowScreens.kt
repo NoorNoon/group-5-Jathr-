@@ -18,7 +18,7 @@ import com.example.jather.ui.theme.JathrTextMain
 import com.example.jather.ui.theme.JathrTextSecondary
 
 @Composable
-fun BookAppointmentScreen(navController: NavController) {
+fun LegacyBookAppointmentScreen(navController: NavController) {
     var date by remember { mutableStateOf("2025/06/15") }
     var time by remember { mutableStateOf("05:00 مساءً") }
 
@@ -52,7 +52,7 @@ fun BookAppointmentScreen(navController: NavController) {
 }
 
 @Composable
-fun PaymentScreen(navController: NavController) {
+fun LegacyPaymentScreen(navController: NavController) {
     var cardNumber by remember { mutableStateOf("4532 •••• •••• 8892") }
 
     JathrScaffold(
@@ -93,7 +93,7 @@ fun PaymentScreen(navController: NavController) {
 }
 
 @Composable
-fun BookingConfirmationScreen(navController: NavController) {
+fun LegacyBookingConfirmationScreen(navController: NavController) {
     JathrScaffold(
         title = "تأكيد الحجز",
         navController = navController,

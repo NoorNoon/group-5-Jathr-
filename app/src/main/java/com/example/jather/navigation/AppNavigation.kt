@@ -30,6 +30,10 @@ sealed class Screen(val route: String) {
     object RateSession : Screen("rate_session")
     object Packages : Screen("packages")
     object NutritionPlans : Screen("nutrition_plans")
+    object FollowUpsList : Screen("followups_list")
+    object ClientFollowUp : Screen("client_followup")
+    object SpecialistReview : Screen("specialist_review")
+    object ClientProgress : Screen("client_progress")
     object PlanEditor : Screen("plan_editor/{clientId}") {
         fun createRoute(clientId: Int) = "plan_editor/$clientId"
     }
@@ -41,7 +45,7 @@ sealed class Screen(val route: String) {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "client_medical_files") {
+    NavHost(navController = navController, startDestination = Screen.Start.route) {
         composable(Screen.Start.route) { StartScreen(navController) }
         composable(Screen.Login.route) { LoginScreen(navController) }
         composable(Screen.SignUp.route) { SignUpScreen(navController) }
@@ -57,13 +61,79 @@ fun AppNavigation() {
         composable(Screen.Payment.route) { PaymentScreen(navController) }
         composable(Screen.PaymentFailed.route) { PaymentFailedScreen(navController) }
         composable(Screen.BookingConfirmation.route) { BookingConfirmationScreen(navController) }
-        composable(Screen.WeeklyFollowUp.route) { WeeklyFollowUpScreen(navController) }
-        composable(Screen.Progress.route) { ProgressScreen(navController) }
+        composable(Screen.WeeklyFollowUp.route) {
+            ClientFollowUpScreen(
+                onBack = { navController.popBackStack() },
+                onSubmitFollowUp = { navController.popBackStack() }
+            )
+        }
+        composable(Screen.Progress.route) {
+            ClientProgressScreen(
+                onNotificationClick = {
+                    navController.navigate(Screen.Notifications.route)
+                },
+                onHomeClick = {
+                    navController.navigate(Screen.Home.route)
+                },
+                onAppointmentsClick = {
+                    navController.navigate(Screen.Appointments.route)
+                },
+                onPlanClick = {
+                    navController.navigate(Screen.NutritionPlan.route)
+                },
+                onProgressClick = {},
+                onProfileClick = {
+                    navController.navigate(Screen.Profile.route)
+                }
+            )
+        }
         composable(Screen.Notifications.route) { NotificationsScreen(navController) }
         composable(Screen.MedicalFiles.route) { MedicalFilesScreen(navController) }
         composable(Screen.EditProfile.route) { EditProfileScreen(navController) }
         composable(Screen.RateSession.route) { RateSessionScreen(navController) }
         composable(Screen.Packages.route) { PackagesScreen(navController) }
+
+        // Teammate Integrated Screens
+        composable("followups_list") {
+            FollowUpsListScreen(
+                onOpenFollowUp = { navController.navigate("client_followup") },
+                onOpenSpecialistReview = { navController.navigate("specialist_review") },
+                onBackClick = { navController.popBackStack() }
+            )
+        }
+        composable("client_followup") {
+            ClientFollowUpScreen(
+                onBack = { navController.popBackStack() },
+                onSubmitFollowUp = { navController.popBackStack() }
+            )
+        }
+        composable("specialist_review") {
+            SpecialistReviewScreen(
+                onBack = { navController.popBackStack() },
+                onConfirmReview = { navController.popBackStack() }
+            )
+        }
+        composable("client_progress") {
+            ClientProgressScreen(
+                onNotificationClick = {
+                    navController.navigate(Screen.Notifications.route)
+                },
+                onHomeClick = {
+                    navController.navigate(Screen.Home.route)
+                },
+                onAppointmentsClick = {
+                    navController.navigate(Screen.Appointments.route)
+                },
+                onPlanClick = {
+                    navController.navigate(Screen.NutritionPlan.route)
+                },
+                onProgressClick = {},
+                onProfileClick = {
+                    navController.navigate(Screen.Profile.route)
+                }
+            )
+        }
+
         plansGraph(navController)
         specialistGraph(navController)
     }

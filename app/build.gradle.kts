@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation("androidx.navigation:navigation-compose:2.10.2")
+    implementation("androidx.compose.material:material-icons-extended")
 
     // Firebase BoM & Dependencies (CSC 402 Firebase Guide)
     implementation(platform("com.google.firebase:firebase-bom:33.8.0"))

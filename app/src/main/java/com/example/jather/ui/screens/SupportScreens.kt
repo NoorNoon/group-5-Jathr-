@@ -73,7 +73,7 @@ fun EditProfileScreen(navController: NavController) {
 }
 
 @Composable
-fun PackagesScreen(navController: NavController) {
+fun LegacyPackagesScreen(navController: NavController) {
     JathrScaffold(
         title = "الباقات المتاحة",
         navController = navController,

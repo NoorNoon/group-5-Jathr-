@@ -30,6 +30,8 @@ fun HomeScreen(navController: NavController) {
         MenuOption("حجز موعد جديد", Screen.BookAppointment.route),
         MenuOption("المتابعة الأسبوعية", Screen.WeeklyFollowUp.route),
         MenuOption("تقدمي ووزني", Screen.Progress.route),
+        MenuOption("سجل المتابعات (الفريق)", "followups_list"),
+        MenuOption("لوحة التقدم (الفريق)", "client_progress"),
         MenuOption("الملفات الطبية", Screen.MedicalFiles.route),
         MenuOption("الباقات المتاحة", Screen.Packages.route),
         MenuOption("الإشعارات", Screen.Notifications.route),

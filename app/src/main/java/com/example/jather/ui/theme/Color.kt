@@ -17,3 +17,14 @@ val JathrTextMain = Color(0xFF2B2238)    // Main Text
 val JathrTextSecondary = Color(0xFF6B6578) // Secondary Text
 val JathrBorder = Color(0xFFDCD5E8)      // Borders
 val JathrSurface = Color(0xFFFcfbfe)     // Card / Surface background
+
+// Teammate UI Colors Aliases
+val DarkPurple = Color(0xFF2B2238)
+val PrimaryPurple = Color(0xFF56308A)
+val LightLavender = Color(0xFFECE6F5)
+val ScreenBackground = Color(0xFFFcfbfe)
+val MainText = Color(0xFF2B2238)
+val SecondaryText = Color(0xFF6B6578)
+val BorderColor = Color(0xFFDCD5E8)
+val SuccessGreen = Color(0xFF2E7D32)
+val SuccessBackground = Color(0xFFE8F5E9)

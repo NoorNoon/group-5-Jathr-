@@ -79,12 +79,15 @@ fun LoginScreen(navController: NavController) {
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             Button(
                 onClick = {
                     navController.navigate(Screen.Home.route) {
-                        popUpTo(Screen.Start.route) { inclusive = true }
+                        popUpTo(Screen.Start.route) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
                     }
                 },
                 modifier = Modifier
