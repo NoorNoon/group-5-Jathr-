@@ -198,7 +198,6 @@ private val IconCheckMark: ImageVector = ImageVector.Builder(
 @Composable
 fun EditProfileScreen(
     uiState: EditProfileUiState,
-    onRoleSelected: (Boolean) -> Unit = {},
     onFullNameChange: (String) -> Unit = {},
     onPhoneChange: (String) -> Unit = {},
     onEmailChange: (String) -> Unit = {},
@@ -302,80 +301,6 @@ fun EditProfileScreen(
                             style = MaterialTheme.typography.bodyMedium,
                             color = JathrTextSecondary,
                         )
-                    }
-                }
-            }
-
-            // 3. Role Tabs ("عميل" is first, "الأخصائي" is second)
-            item {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            color = MaterialTheme.colorScheme.surface,
-                            shape = RoundedCornerShape(12.dp),
-                        )
-                        .padding(4.dp),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                    // Client Tab (First)
-                    Surface(
-                        onClick = { onRoleSelected(false) },
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(44.dp),
-                        shape = RoundedCornerShape(12.dp),
-                        color = if (!uiState.isSpecialist) JathrPrimary else Color.Transparent,
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxSize(),
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Icon(
-                                imageVector = IconPersonUser,
-                                contentDescription = stringResource(R.string.client_tab),
-                                tint = if (!uiState.isSpecialist) MaterialTheme.colorScheme.onPrimary else JathrPrimary,
-                                modifier = Modifier.size(18.dp),
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Text(
-                                text = stringResource(R.string.client_tab),
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
-                                color = if (!uiState.isSpecialist) MaterialTheme.colorScheme.onPrimary else JathrPrimary,
-                            )
-                        }
-                    }
-
-                    // Specialist Tab (Second)
-                    Surface(
-                        onClick = { onRoleSelected(true) },
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(44.dp),
-                        shape = RoundedCornerShape(12.dp),
-                        color = if (uiState.isSpecialist) JathrPrimary else Color.Transparent,
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxSize(),
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Icon(
-                                imageVector = IconPersonUser,
-                                contentDescription = stringResource(R.string.specialist_tab),
-                                tint = if (uiState.isSpecialist) MaterialTheme.colorScheme.onPrimary else JathrPrimary,
-                                modifier = Modifier.size(18.dp),
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Text(
-                                text = stringResource(R.string.specialist_tab),
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
-                                color = if (uiState.isSpecialist) MaterialTheme.colorScheme.onPrimary else JathrPrimary,
-                            )
-                        }
                     }
                 }
             }
@@ -707,7 +632,6 @@ fun EditProfileScreenClientPreview() {
                 chronicConditions = "ضغط الدم",
                 allergies = "الفول السوداني",
             ),
-            onRoleSelected = {},
             onFullNameChange = {},
             onPhoneChange = {},
             onEmailChange = {},
@@ -745,7 +669,6 @@ fun EditProfileScreenSpecialistPreview() {
                 yearsOfExperience = "5 سنوات",
                 workplace = "مستشفى الملك فيصل",
             ),
-            onRoleSelected = {},
             onFullNameChange = {},
             onPhoneChange = {},
             onEmailChange = {},

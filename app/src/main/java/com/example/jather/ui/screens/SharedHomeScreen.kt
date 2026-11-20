@@ -239,7 +239,6 @@ private val IconChatNote: ImageVector = ImageVector.Builder(
 @Composable
 fun SharedHomeScreen(
     uiState: SharedHomeUiState,
-    onRoleSelected: (Boolean) -> Unit,
     onNotificationsClick: () -> Unit,
     onNextAppointmentClick: () -> Unit,
     onViewPlanClick: () -> Unit,
@@ -336,81 +335,6 @@ fun SharedHomeScreen(
                         color = JathrTextSecondary,
                     )
 
-                    Spacer(modifier = Modifier.height(14.dp))
-
-                    // Role Toggle ("عميل" is first / right in RTL, "الأخصائي" second)
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(
-                                color = MaterialTheme.colorScheme.surface,
-                                shape = RoundedCornerShape(12.dp),
-                            )
-                            .padding(4.dp),
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    ) {
-                        // Client Tab
-                        Surface(
-                            onClick = { onRoleSelected(false) },
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(44.dp),
-                            shape = RoundedCornerShape(12.dp),
-                            color = if (!uiState.isSpecialist) JathrPrimary else Color.Transparent,
-                        ) {
-                            Row(
-                                modifier = Modifier.fillMaxSize(),
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                // TODO: icon
-                                Icon(
-                                    imageVector = IconPerson,
-                                    contentDescription = stringResource(R.string.client_tab),
-                                    tint = if (!uiState.isSpecialist) MaterialTheme.colorScheme.onPrimary else JathrPrimary,
-                                    modifier = Modifier.size(18.dp),
-                                )
-                                Spacer(modifier = Modifier.width(6.dp))
-                                Text(
-                                    text = stringResource(R.string.client_tab),
-                                    style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.Bold,
-                                    color = if (!uiState.isSpecialist) MaterialTheme.colorScheme.onPrimary else JathrPrimary,
-                                )
-                            }
-                        }
-
-                        // Specialist Tab
-                        Surface(
-                            onClick = { onRoleSelected(true) },
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(44.dp),
-                            shape = RoundedCornerShape(12.dp),
-                            color = if (uiState.isSpecialist) JathrPrimary else Color.Transparent,
-                        ) {
-                            Row(
-                                modifier = Modifier.fillMaxSize(),
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                // TODO: icon
-                                Icon(
-                                    imageVector = IconPerson,
-                                    contentDescription = stringResource(R.string.specialist_tab),
-                                    tint = if (uiState.isSpecialist) MaterialTheme.colorScheme.onPrimary else JathrPrimary,
-                                    modifier = Modifier.size(18.dp),
-                                )
-                                Spacer(modifier = Modifier.width(6.dp))
-                                Text(
-                                    text = stringResource(R.string.specialist_tab),
-                                    style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.Bold,
-                                    color = if (uiState.isSpecialist) MaterialTheme.colorScheme.onPrimary else JathrPrimary,
-                                )
-                            }
-                        }
-                    }
                 }
             }
 
@@ -1346,7 +1270,6 @@ fun SharedHomeScreenClientPreview() {
                     adherencePercent = "٩٠٪",
                 ),
             ),
-            onRoleSelected = {},
             onNotificationsClick = {},
             onNextAppointmentClick = {},
             onViewPlanClick = {},
@@ -1384,7 +1307,6 @@ fun SharedHomeScreenSpecialistPreview() {
                     PendingFollowUpData("2", "لينا السبيعي", "الوزن ٦٤٫٥ كجم · الالتزام ٧٠٪"),
                 ),
             ),
-            onRoleSelected = {},
             onNotificationsClick = {},
             onNextAppointmentClick = {},
             onViewPlanClick = {},
@@ -1406,7 +1328,6 @@ fun SharedHomeScreenSpecialistEmptyPreview() {
     JatherTheme {
         SharedHomeScreen(
             uiState = SharedHomeUiState(isSpecialist = true),
-            onRoleSelected = {},
             onNotificationsClick = {},
             onNextAppointmentClick = {},
             onViewPlanClick = {},
@@ -1428,7 +1349,6 @@ fun SharedHomeScreenEmptyPreview() {
     JatherTheme {
         SharedHomeScreen(
             uiState = SharedHomeUiState(),
-            onRoleSelected = {},
             onNotificationsClick = {},
             onNextAppointmentClick = {},
             onViewPlanClick = {},

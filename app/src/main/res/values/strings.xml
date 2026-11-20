@@ -87,4 +87,6 @@
     <string name="day_thursday">الخميس</string>
     <string name="day_friday">الجمعة</string>
     <string name="day_saturday">السبت</string>
+    <string name="login_role_client">عميل</string>
+    <string name="login_role_specialist">أخصائي</string>
 </resources>

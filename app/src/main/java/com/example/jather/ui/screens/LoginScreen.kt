@@ -15,11 +15,14 @@ import com.example.jather.navigation.Screen
 import com.example.jather.ui.theme.JathrPrimary
 import com.example.jather.ui.theme.JathrTextMain
 import com.example.jather.ui.theme.JathrTextSecondary
+import com.example.jather.navigation.SessionRole
+import com.example.jather.ui.components.RoleSelector
 
 @Composable
 fun LoginScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var isSpecialist by remember { mutableStateOf(false) }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -48,6 +51,13 @@ fun LoginScreen(navController: NavController) {
             )
 
             Spacer(modifier = Modifier.height(32.dp))
+
+            RoleSelector(
+                isSpecialist = isSpecialist,
+                onRoleSelected = { isSpecialist = it }
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
 
             OutlinedTextField(
                 value = email,
@@ -83,6 +93,7 @@ fun LoginScreen(navController: NavController) {
 
             Button(
                 onClick = {
+                    SessionRole.isSpecialist = isSpecialist
                     navController.navigate(Screen.Home.route) {
                         popUpTo(Screen.Start.route) { inclusive = true }
                     }

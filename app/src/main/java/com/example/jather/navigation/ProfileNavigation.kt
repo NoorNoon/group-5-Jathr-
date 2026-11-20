@@ -36,21 +36,16 @@ fun NavController.navigateToBookAppointment() = navigate(Screen.BookAppointment.
 
 // ---------- Routes (navigation only; state and logic come in the next phase) ----------
 
-// TODO: logic - I will write it (temporary demo role; replace with the real role from Firestore/ViewModel)
-private var demoIsSpecialist by mutableStateOf(false)
+
 
 @Composable
 private fun SharedHomeRoute(navController: NavController) {
     // TODO: logic - I will write it (replace with ViewModel and real role from Firestore)
-    var uiState by remember { mutableStateOf(SharedHomeUiState()) }
+    val uiState = SharedHomeUiState().copy(isSpecialist = SessionRole.isSpecialist)
 
     JathrScaffold(title = "", navController = navController, showTopBar = false) { padding ->
         SharedHomeScreen(
             uiState = uiState,
-            onRoleSelected = { isSpecialist ->
-                demoIsSpecialist = isSpecialist
-                uiState = uiState.copy(isSpecialist = isSpecialist)
-            },
             onNotificationsClick = { navController.navigateToNotifications() },
             onNextAppointmentClick = {}, // TODO: logic - I will write it
             onViewPlanClick = { navController.navigateToNutritionPlan() },
@@ -74,7 +69,7 @@ private fun AccountRoute(navController: NavController) {
 
     JathrScaffold(title = "", navController = navController, showTopBar = false) { padding ->
         AccountScreen(
-            uiState = uiState.copy(isSpecialist = demoIsSpecialist),
+            uiState = uiState.copy(isSpecialist = SessionRole.isSpecialist),
             onFullNameChange = { uiState = uiState.copy(fullName = it) },
             onPhoneChange = { uiState = uiState.copy(phone = it) },
             onSaveClick = {}, // TODO: logic - I will write it
@@ -95,7 +90,7 @@ private fun AccountRoute(navController: NavController) {
 private fun EditProfileRoute(navController: NavController) {
     // TODO: logic - I will write it (replace with ViewModel, validation and saving to Firestore)
     var uiState by remember {
-        mutableStateOf(EditProfileUiState(isSpecialist = demoIsSpecialist))
+        mutableStateOf(EditProfileUiState(isSpecialist = SessionRole.isSpecialist))
     }
 
     JathrScaffold(
@@ -104,7 +99,6 @@ private fun EditProfileRoute(navController: NavController) {
     ) { padding ->
         EditProfileScreen(
             uiState = uiState,
-            onRoleSelected = { isSpecialist -> uiState = uiState.copy(isSpecialist = isSpecialist) },
             onFullNameChange = { uiState = uiState.copy(fullName = it) },
             onPhoneChange = { uiState = uiState.copy(phone = it) },
             onEmailChange = { uiState = uiState.copy(email = it) },
