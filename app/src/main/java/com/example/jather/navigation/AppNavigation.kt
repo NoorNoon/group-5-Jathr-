@@ -43,7 +43,7 @@ sealed class Screen(val route: String) {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "client_medical_files") {
+    NavHost(navController = navController, startDestination = Screen.Start.route) {
         composable(Screen.Start.route) { StartScreen(navController) }
         composable(Screen.Login.route) { LoginScreen(navController) }
         composable(Screen.SignUp.route) { SignUpScreen(navController) }
