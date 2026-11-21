@@ -10,6 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.example.jather.data.DemoData
+import com.example.jather.data.PlanRepository
+import com.example.jather.ui.screens.AppointmentItemData
+import com.example.jather.ui.screens.NextAppointmentData
+import com.example.jather.ui.screens.PendingFollowUpData
+import com.example.jather.ui.screens.ProgressOverviewData
+import com.example.jather.ui.screens.SpecialistNoteData
+import com.example.jather.ui.screens.WeightProgressData
 import com.example.jather.ui.components.JathrScaffold
 import com.example.jather.ui.screens.AccountScreen
 import com.example.jather.ui.screens.AccountUiState
@@ -38,10 +46,70 @@ fun NavController.navigateToBookAppointment() = navigate(Screen.BookAppointment.
 
 
 
+private fun currentClientName(): String = DemoData.currentClientName
+
+// Demo data for the home screen (same people as DemoData, and the client's note comes
+// from the plan the specialist published). Replace with real data from Firebase later.
+private fun demoHomeState(isSpecialist: Boolean): SharedHomeUiState {
+    if (isSpecialist) {
+        return SharedHomeUiState(
+            isSpecialist = true,
+            todayAppointmentsCount = 3,
+            activeClientsCount = DemoData.clients.size,
+            newFollowUpsCount = 2,
+            todayAppointmentsList = listOf(
+                AppointmentItemData("1", DemoData.clientName(4), "متابعة · زيادة الوزن", "٤:٠٠ م", "مؤكد"),
+                AppointmentItemData("2", DemoData.clientName(3), "مراجعة الخطة", "٥:١٥ م", "مؤكد"),
+                AppointmentItemData("3", DemoData.clientName(6), "استشارة أولى", "٧:٠٠ م", "بانتظار الدفع")
+            ),
+            pendingFollowUpsList = listOf(
+                PendingFollowUpData("1", DemoData.clientName(5), "الوزن ٦٤٫٥ كجم · الالتزام ٧٠٪"),
+                PendingFollowUpData("2", DemoData.clientName(2), "الوزن ٧٠٫٢ كجم · الالتزام ٩٠٪")
+            )
+        )
+    }
+    val planNotes = PlanRepository.latestPublishedPlanFor(DemoData.CURRENT_CLIENT_ID)?.notes.orEmpty()
+    return SharedHomeUiState(
+        isSpecialist = false,
+        nextAppointment = NextAppointmentData(
+            id = "2041",
+            specialistName = DemoData.SPECIALIST_NAME,
+            specialistRole = "أخصائية تغذية علاجية",
+            dateText = "الأحد، ٢٢ نوفمبر",
+            timeText = "٤:٠٠ م",
+            statusText = "مؤكد"
+        ),
+        weightProgress = WeightProgressData(
+            currentWeight = "٧٠٫٢ كجم",
+            adherenceText = "الالتزام ٩٠٪ هذا الأسبوع",
+            progressPercentText = "٤٨٪ من الطريق",
+            progressFraction = 0.48f,
+            startWeightText = "البداية ٧٤ كجم",
+            lostWeightText = "خسرتِ ٣٫٨ من ٨ كجم",
+            goalWeightText = "الهدف ٦٦ كجم"
+        ),
+        latestNote = SpecialistNoteData(
+            specialistName = DemoData.SPECIALIST_NAME,
+            timeText = "أمس، ٥:١٠ م",
+            noteText = planNotes.ifEmpty { "أحسنتِ هذا الأسبوع، استمري على الخطة." }
+        ),
+        progressOverview = ProgressOverviewData(
+            weeklyChange = "-٠٫٧",
+            weeksCount = "٢",
+            adherencePercent = "٩٠٪"
+        )
+    )
+}
+
 @Composable
 private fun SharedHomeRoute(navController: NavController) {
     // TODO: logic - I will write it (replace with ViewModel and real role from Firestore)
-    val uiState = SharedHomeUiState().copy(isSpecialist = SessionRole.isSpecialist)
+    // The demo client is the same one the plans screens use (PlanRepository.CURRENT_CLIENT_ID),
+    // so the name on the home screen matches the plan the specialist published.
+    val clientFirstName = currentClientName().substringBefore(" ")
+    val uiState = demoHomeState(SessionRole.isSpecialist).copy(
+        userName = if (SessionRole.isSpecialist) DemoData.SPECIALIST_NAME.removePrefix("أ. ").substringBefore(" ") else clientFirstName
+    )
 
     JathrScaffold(title = "", navController = navController, showTopBar = false) { padding ->
         SharedHomeScreen(
@@ -65,7 +133,9 @@ private fun SharedHomeRoute(navController: NavController) {
 @Composable
 private fun AccountRoute(navController: NavController) {
     // TODO: logic - I will write it (replace with ViewModel and real user data from Firestore)
-    var uiState by remember { mutableStateOf(AccountUiState()) }
+    var uiState by remember {
+        mutableStateOf(AccountUiState(fullName = if (SessionRole.isSpecialist) "" else currentClientName()))
+    }
 
     JathrScaffold(title = "", navController = navController, showTopBar = false) { padding ->
         AccountScreen(
@@ -90,7 +160,7 @@ private fun AccountRoute(navController: NavController) {
 private fun EditProfileRoute(navController: NavController) {
     // TODO: logic - I will write it (replace with ViewModel, validation and saving to Firestore)
     var uiState by remember {
-        mutableStateOf(EditProfileUiState(isSpecialist = SessionRole.isSpecialist))
+        mutableStateOf(EditProfileUiState(isSpecialist = SessionRole.isSpecialist, fullName = if (SessionRole.isSpecialist) "" else currentClientName()))
     }
 
     JathrScaffold(

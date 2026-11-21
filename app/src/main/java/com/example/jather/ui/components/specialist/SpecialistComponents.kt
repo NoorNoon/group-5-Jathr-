@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.jather.navigation.Screen
+import com.example.jather.ui.components.JathrBottomBar
 import kotlinx.coroutines.launch
 
 val SpecialistDarkPurple = Color(0xFF3B2A50)
@@ -207,52 +208,8 @@ fun SpecialistScrollBar(scrollState: ScrollState, modifier: Modifier = Modifier)
 
 @Composable
 fun SpecialistBottomNav(navController: NavController, selectedIndex: Int = 1) {
-    NavigationBar(
-        containerColor = SpecialistLavender,
-        contentColor = SpecialistPrimary
-    ) {
-        val items = listOf(
-            Triple("الرئيسية", "🏠", Screen.Home.route),
-            Triple("العملاء", "👥", "specialist_clients"),
-            Triple("الجدول", "📅", Screen.Appointments.route),
-            Triple("حسابي", "👤", Screen.Profile.route)
-        )
-        items.forEachIndexed { index, (label, emoji, route) ->
-            val isSelected = index == selectedIndex
-            NavigationBarItem(
-                selected = isSelected,
-                onClick = {
-                    if (route.startsWith("specialist_")) {
-                        navController.navigate(route) {
-                            popUpTo("specialist_clients") { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    } else {
-                        navController.navigate(route) {
-                            popUpTo(Screen.Home.route) { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    }
-                },
-                label = {
-                    Text(
-                        text = label,
-                        fontSize = 11.sp,
-                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                        color = if (isSelected) SpecialistPrimary else SpecialistTextSecondary
-                    )
-                },
-                icon = {
-                    Text(text = emoji, fontSize = 18.sp)
-                },
-                colors = NavigationBarItemDefaults.colors(
-                    indicatorColor = Color.White
-                )
-            )
-        }
-    }
+    // Same shared bar as every other screen (selectedIndex is kept for existing callers)
+    JathrBottomBar(navController)
 }
 
 @Composable

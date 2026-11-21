@@ -1,5 +1,6 @@
 package com.example.jather.ui.screens
 
+import com.example.jather.data.DemoData
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,14 +27,14 @@ import java.util.Locale
 internal data class SharedAppointment(val id:String,val person:String,val date:LocalDate,val time:String,val completed:Boolean=false,val cancelled:Boolean=false)
 internal object SharedAppointmentStore {
  val items = mutableStateListOf(
- SharedAppointment("2041","نورة القحطاني",LocalDate.of(2026,11,22),"4:00 م"),
- SharedAppointment("2097","عائشة المطيري",LocalDate.of(2026,11,24),"6:20 م"),
- SharedAppointment("2100","نورة القحطاني",LocalDate.of(2026,11,26),"5:00 م"),
- SharedAppointment("1981","نورة القحطاني",LocalDate.of(2026,11,18),"5:00 م",true),
- SharedAppointment("3012","سارة أحمد",LocalDate.of(2026,11,22),"10:00 ص"),
- SharedAppointment("3013","ريم محمد",LocalDate.of(2026,11,23),"2:00 م"),
- SharedAppointment("3014","هدى علي",LocalDate.of(2026,11,25),"3:00 م"),
- SharedAppointment("3005","هدى علي",LocalDate.of(2026,11,17),"3:00 م",true))
+ SharedAppointment("2041",DemoData.clientName(2),LocalDate.of(2026,11,22),"4:00 م"),
+ SharedAppointment("2097",DemoData.clientName(4),LocalDate.of(2026,11,24),"6:20 م"),
+ SharedAppointment("2100",DemoData.clientName(2),LocalDate.of(2026,11,26),"5:00 م"),
+ SharedAppointment("1981",DemoData.clientName(2),LocalDate.of(2026,11,18),"5:00 م",true),
+ SharedAppointment("3012",DemoData.clientName(6),LocalDate.of(2026,11,22),"10:00 ص"),
+ SharedAppointment("3013",DemoData.clientName(3),LocalDate.of(2026,11,23),"2:00 م"),
+ SharedAppointment("3014",DemoData.clientName(5),LocalDate.of(2026,11,25),"3:00 م"),
+ SharedAppointment("3005",DemoData.clientName(5),LocalDate.of(2026,11,17),"3:00 م",true))
  val summaries=mutableStateMapOf<String,Pair<String,String>>()
  val ratings=mutableStateMapOf<String,Pair<Int,String>>()
  var role by mutableStateOf("العميل")

@@ -22,9 +22,12 @@ import androidx.navigation.compose.rememberNavController
 import com.example.jather.navigation.Screen
 import com.example.jather.navigation.navigateToSpecialistAnalysisReview
 import com.example.jather.navigation.navigateToSpecialistAssessment
+import com.example.jather.data.DemoData
 import com.example.jather.navigation.navigateToSpecialistClient
 import com.example.jather.navigation.navigateToSpecialistFiles
 import com.example.jather.ui.components.specialist.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Person
 
 data class SpecialistClient(
     val id: Int,
@@ -34,13 +37,10 @@ data class SpecialistClient(
     val status: String
 )
 
-val mockClients = listOf(
-    SpecialistClient(1, "سارة العنزي", "إنقاص الوزن", 6, "نشط"),
-    SpecialistClient(2, "ريم الدوسري", "زيادة الوزن", 1, "يحتاج متابعة"),
-    SpecialistClient(3, "محمد الحربي", "إنقاص الوزن", 4, "نشط"),
-    SpecialistClient(4, "لينا السبيعي", "تثبيت الوزن", 2, "يحتاج متابعة"),
-    SpecialistClient(5, "خالد المطيري", "نمط حياة صحي", 12, "مكتمل")
-)
+// Same clients and ids as the plans screens (see DemoData)
+val mockClients = DemoData.clients.map {
+    SpecialistClient(it.id, it.name, it.goal, it.week, it.status)
+}
 
 @Composable
 fun ClientListScreen(navController: NavController) {
@@ -154,11 +154,11 @@ fun ClientCard(client: SpecialistClient, onClick: () -> Unit) {
                 .background(SpecialistLavender, CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = client.name.take(1),
-                color = SpecialistPrimary,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
+            Icon(
+                imageVector = Icons.Outlined.Person,
+                contentDescription = client.name,
+                tint = SpecialistPrimary,
+                modifier = Modifier.size(27.dp)
             )
         }
 

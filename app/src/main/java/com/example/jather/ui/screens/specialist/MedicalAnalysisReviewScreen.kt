@@ -22,6 +22,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.jather.ui.components.specialist.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Description
+import androidx.compose.material.icons.outlined.Person
 
 @Composable
 fun MedicalAnalysisReviewScreen(navController: NavController, fileId: Int = 1) {
@@ -61,11 +64,11 @@ fun MedicalAnalysisReviewScreen(navController: NavController, fileId: Int = 1) {
                         .background(SpecialistLavender, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = client.name.take(1),
-                        color = SpecialistPrimary,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                    Icon(
+                        imageVector = Icons.Outlined.Person,
+                        contentDescription = client.name,
+                        tint = SpecialistPrimary,
+                        modifier = Modifier.size(27.dp)
                     )
                 }
                 Spacer(modifier = Modifier.width(12.dp))
@@ -104,7 +107,7 @@ fun MedicalAnalysisReviewScreen(navController: NavController, fileId: Int = 1) {
                             .background(SpecialistLavender, RoundedCornerShape(12.dp)),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(text = "📄", fontSize = 20.sp)
+                        Icon(Icons.Outlined.Description, contentDescription = null, tint = SpecialistPrimary, modifier = Modifier.size(22.dp))
                     }
                     Spacer(modifier = Modifier.width(12.dp))
                     Column(modifier = Modifier.weight(1f)) {

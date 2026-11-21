@@ -20,6 +20,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jather.navigation.navigateToSpecialistAnalysisReview
 import com.example.jather.ui.components.specialist.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Description
 
 data class SpecialistFile(
     val id: Int,
@@ -149,7 +151,7 @@ fun SpecialistFileCard(file: SpecialistFile, onViewClick: () -> Unit) {
                     .background(SpecialistLavender, RoundedCornerShape(12.dp)),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "📄", fontSize = 20.sp)
+                Icon(Icons.Outlined.Description, contentDescription = null, tint = SpecialistPrimary, modifier = Modifier.size(22.dp))
             }
 
             Spacer(modifier = Modifier.width(12.dp))

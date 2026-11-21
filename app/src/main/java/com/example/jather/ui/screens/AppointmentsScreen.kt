@@ -14,6 +14,7 @@ import com.example.jather.ui.components.JathrScaffold
 import com.example.jather.ui.theme.JathrPrimary
 import com.example.jather.ui.theme.JathrTextMain
 import com.example.jather.ui.theme.JathrTextSecondary
+import com.example.jather.data.DemoData
 
 @Composable
 fun AppointmentsScreen(navController: NavController) {
@@ -36,9 +37,9 @@ fun AppointmentsScreen(navController: NavController) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text("استشارة مع أ. سارة الشمري", fontWeight = FontWeight.Bold, fontSize = 16.sp, color = JathrPrimary)
+                    Text("استشارة مع ${DemoData.SPECIALIST_NAME}", fontWeight = FontWeight.Bold, fontSize = 16.sp, color = JathrPrimary)
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text("التاريخ: 2025/06/10 - الساعة 04:00 مساءً", fontSize = 14.sp, color = JathrTextSecondary)
+                    Text("التاريخ: 2026/11/22 - الساعة 04:00 مساءً", fontSize = 14.sp, color = JathrTextSecondary)
                     Spacer(modifier = Modifier.height(8.dp))
                     Text("الحالة: مؤكد", fontSize = 14.sp, color = Color(0xFF2E7D32), fontWeight = FontWeight.SemiBold)
                 }

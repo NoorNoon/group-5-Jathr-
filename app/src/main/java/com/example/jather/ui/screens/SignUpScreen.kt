@@ -17,6 +17,10 @@ import com.example.jather.ui.theme.JathrTextMain
 import com.example.jather.ui.theme.JathrTextSecondary
 import com.example.jather.navigation.SessionRole
 import com.example.jather.ui.components.RoleSelector
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Lock
 
 @Composable
 fun SignUpScreen(navController: NavController) {
@@ -64,6 +68,7 @@ fun SignUpScreen(navController: NavController) {
                 value = name,
                 onValueChange = { name = it },
                 label = { Text("الاسم الكامل") },
+                leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = null, tint = JathrPrimary) },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -74,6 +79,7 @@ fun SignUpScreen(navController: NavController) {
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("البريد الإلكتروني") },
+                leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = null, tint = JathrPrimary) },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -84,6 +90,7 @@ fun SignUpScreen(navController: NavController) {
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("كلمة المرور") },
+                leadingIcon = { Icon(Icons.Outlined.Lock, contentDescription = null, tint = JathrPrimary) },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true

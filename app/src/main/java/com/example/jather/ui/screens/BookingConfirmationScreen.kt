@@ -21,7 +21,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.jather.navigation.Screen
+import com.example.jather.ui.components.JathrBottomBar
 import com.example.jather.ui.components.bottomNavItems
+import com.example.jather.data.DemoData
 
 // Local Color Palette (Matching PackagesScreen.kt)
 private val PrimaryPurple = Color(0xFF6B4E8C)
@@ -43,42 +45,7 @@ fun BookingConfirmationScreen(navController: NavController) {
             modifier = Modifier.fillMaxSize(),
             containerColor = ScreenBackground,
             bottomBar = {
-                NavigationBar(
-                    containerColor = LightLavender,
-                    contentColor = PrimaryPurple
-                ) {
-                    bottomNavItems.forEach { item ->
-                        val isSelected = currentRoute == item.route
-                        NavigationBarItem(
-                            selected = isSelected,
-                            onClick = {
-                                if (currentRoute != item.route) {
-                                    navController.navigate(item.route) {
-                                        popUpTo(Screen.Home.route)
-                                        launchSingleTop = true
-                                    }
-                                }
-                            },
-                            label = {
-                                Text(
-                                    text = item.label,
-                                    fontSize = 11.sp,
-                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                                    color = if (isSelected) PrimaryPurple else Color.DarkGray
-                                )
-                            },
-                            icon = {
-                                Text(
-                                    text = item.iconEmoji,
-                                    fontSize = 18.sp
-                                )
-                            },
-                            colors = NavigationBarItemDefaults.colors(
-                                indicatorColor = Color.White
-                            )
-                        )
-                    }
-                }
+                JathrBottomBar(navController)
             }
         ) { innerPadding ->
             LazyColumn(
@@ -170,7 +137,7 @@ fun BookingConfirmationScreen(navController: NavController) {
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Text("الأخصائي:", fontSize = 13.sp, color = SecondaryText)
-                                Text("أ. سارة الشمري", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = MainText)
+                                Text(DemoData.SPECIALIST_NAME, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = MainText)
                             }
 
                             Row(
