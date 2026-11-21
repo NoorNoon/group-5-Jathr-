@@ -99,6 +99,7 @@ fun LoginScreen(navController: NavController) {
             Button(
                 onClick = {
                     SessionRole.isSpecialist = isSpecialist
+                    SessionRole.hasDemoData = true
                     navController.navigate(Screen.Home.route) {
                         popUpTo(Screen.Start.route) { inclusive = true }
                     }
