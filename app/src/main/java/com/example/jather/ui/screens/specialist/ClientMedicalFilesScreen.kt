@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jather.navigation.Screen
+import com.example.jather.ui.components.JathrBottomBar
 import com.example.jather.ui.components.bottomNavItems
 import com.example.jather.ui.components.specialist.*
 
@@ -55,16 +56,7 @@ fun ClientMedicalFilesScreen(navController: NavController) {
         Scaffold(
             containerColor = SpecialistScreenBg,
             bottomBar = {
-                NavigationBar(containerColor = SpecialistLavender) {
-                    bottomNavItems.forEach { item ->
-                        NavigationBarItem(
-                            selected = false,
-                            onClick = { navController.navigate(item.route) },
-                            label = { Text(item.label, fontSize = 11.sp, color = SpecialistTextSecondary) },
-                            icon = { Text(item.iconEmoji, fontSize = 18.sp) }
-                        )
-                    }
-                }
+                JathrBottomBar(navController)
             }
         ) { pad ->
             Box(Modifier.fillMaxSize().padding(pad)) {

@@ -9,15 +9,10 @@ import com.example.jather.data.model.WeekDay
 
 object PlanRepository {
 
-    const val CURRENT_CLIENT_ID = 2
+    const val CURRENT_CLIENT_ID = DemoData.CURRENT_CLIENT_ID
 
-    val clients = listOf(
-        Client(1, "لارا الشمراني"),
-        Client(2, "نورة القحطاني"),
-        Client(3, "سارة العتيبي"),
-        Client(4, "ريم الدوسري"),
-        Client(5, "هند الشهري")
-    )
+    // Same clients as the rest of the app (see DemoData)
+    val clients = DemoData.clients.map { Client(it.id, it.name) }
 
     private var lastMealId = 0
 
@@ -124,14 +119,12 @@ object PlanRepository {
             ),
             publishedPlan(
                 id = 2,
-                clientId = 5,
+                clientId = 3,
                 week = 4,
                 days = listOf(WeekDay.SUN, WeekDay.TUE, WeekDay.THU),
                 notes = "قللي السكريات وزيدي الخضار في العشاء."
             ),
-            emptyDraft(id = 3, clientId = 1, week = 1),
-            emptyDraft(id = 4, clientId = 3, week = 3),
-            emptyDraft(id = 5, clientId = 4, week = 1)
+            emptyDraft(id = 3, clientId = 1, week = 1)
         )
     }
 }

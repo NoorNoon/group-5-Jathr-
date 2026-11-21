@@ -18,7 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.jather.data.DemoData
 import com.example.jather.navigation.Screen
+import com.example.jather.ui.components.JathrBottomBar
 import com.example.jather.ui.components.bottomNavItems
 
 // Local Color Palette (Matching PackagesScreen.kt)
@@ -36,7 +38,7 @@ private val SuccessBg = Color(0xFFE3F2E8)
 @Composable
 fun PaymentScreen(navController: NavController) {
     var selectedMethod by remember { mutableStateOf("mada") }
-    var cardHolderName by remember { mutableStateOf("أحمد محمد العتيبي") }
+    var cardHolderName by remember { mutableStateOf(DemoData.currentClientName) }
     var cardNumber by remember { mutableStateOf("4532 •••• •••• 8892") }
     var expiryDate by remember { mutableStateOf("08/27") }
     var cvv by remember { mutableStateOf("321") }
@@ -49,42 +51,7 @@ fun PaymentScreen(navController: NavController) {
             modifier = Modifier.fillMaxSize(),
             containerColor = ScreenBackground,
             bottomBar = {
-                NavigationBar(
-                    containerColor = LightLavender,
-                    contentColor = PrimaryPurple
-                ) {
-                    bottomNavItems.forEach { item ->
-                        val isSelected = currentRoute == item.route
-                        NavigationBarItem(
-                            selected = isSelected,
-                            onClick = {
-                                if (currentRoute != item.route) {
-                                    navController.navigate(item.route) {
-                                        popUpTo(Screen.Home.route)
-                                        launchSingleTop = true
-                                    }
-                                }
-                            },
-                            label = {
-                                Text(
-                                    text = item.label,
-                                    fontSize = 11.sp,
-                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                                    color = if (isSelected) PrimaryPurple else Color.DarkGray
-                                )
-                            },
-                            icon = {
-                                Text(
-                                    text = item.iconEmoji,
-                                    fontSize = 18.sp
-                                )
-                            },
-                            colors = NavigationBarItemDefaults.colors(
-                                indicatorColor = Color.White
-                            )
-                        )
-                    }
-                }
+                JathrBottomBar(navController)
             }
         ) { innerPadding ->
             LazyColumn(

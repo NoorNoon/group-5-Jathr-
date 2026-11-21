@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.example.jather.data.DemoData
 import com.example.jather.ui.components.JathrScaffold
 import com.example.jather.ui.screens.AccountScreen
 import com.example.jather.ui.screens.AccountUiState
@@ -38,10 +39,18 @@ fun NavController.navigateToBookAppointment() = navigate(Screen.BookAppointment.
 
 
 
+private fun currentClientName(): String = DemoData.currentClientName
+
 @Composable
 private fun SharedHomeRoute(navController: NavController) {
     // TODO: logic - I will write it (replace with ViewModel and real role from Firestore)
-    val uiState = SharedHomeUiState().copy(isSpecialist = SessionRole.isSpecialist)
+    // The demo client is the same one the plans screens use (PlanRepository.CURRENT_CLIENT_ID),
+    // so the name on the home screen matches the plan the specialist published.
+    val clientFirstName = currentClientName().substringBefore(" ")
+    val uiState = SharedHomeUiState().copy(
+        isSpecialist = SessionRole.isSpecialist,
+        userName = if (SessionRole.isSpecialist) "" else clientFirstName
+    )
 
     JathrScaffold(title = "", navController = navController, showTopBar = false) { padding ->
         SharedHomeScreen(
@@ -65,7 +74,9 @@ private fun SharedHomeRoute(navController: NavController) {
 @Composable
 private fun AccountRoute(navController: NavController) {
     // TODO: logic - I will write it (replace with ViewModel and real user data from Firestore)
-    var uiState by remember { mutableStateOf(AccountUiState()) }
+    var uiState by remember {
+        mutableStateOf(AccountUiState(fullName = if (SessionRole.isSpecialist) "" else currentClientName()))
+    }
 
     JathrScaffold(title = "", navController = navController, showTopBar = false) { padding ->
         AccountScreen(
@@ -90,7 +101,7 @@ private fun AccountRoute(navController: NavController) {
 private fun EditProfileRoute(navController: NavController) {
     // TODO: logic - I will write it (replace with ViewModel, validation and saving to Firestore)
     var uiState by remember {
-        mutableStateOf(EditProfileUiState(isSpecialist = SessionRole.isSpecialist))
+        mutableStateOf(EditProfileUiState(isSpecialist = SessionRole.isSpecialist, fullName = if (SessionRole.isSpecialist) "" else currentClientName()))
     }
 
     JathrScaffold(

@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jather.navigation.Screen
+import com.example.jather.navigation.navigateToPlanEditor
 import com.example.jather.navigation.navigateToSpecialistAnalysisReview
 import com.example.jather.navigation.navigateToSpecialistAssessment
 import com.example.jather.navigation.navigateToSpecialistFiles
@@ -263,7 +264,7 @@ fun ClientProfileScreen(navController: NavController, clientId: Int = 1) {
 
                 SpecialistPrimaryButton(
                     text = "تعديل الخطة الغذائية",
-                    onClick = { navController.navigate(Screen.NutritionPlans.route) }
+                    onClick = { navController.navigateToPlanEditor(client.id) }
                 )
             }
         }
