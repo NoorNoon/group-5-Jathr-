@@ -147,6 +147,8 @@ fun AccountScreen(
     onMedicalFilesClick: () -> Unit,
     onNotificationsClick: () -> Unit,
     onFollowUpLogClick: () -> Unit,
+    onPackagesClick: () -> Unit,
+    onSubscriptionHistoryClick: () -> Unit,
     onAvailabilityClick: () -> Unit = {},
     onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -605,6 +607,65 @@ fun AccountScreen(
                                     )
                                 }
                             }
+                            HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
+
+// Client Row 4: Available Packages
+                            Surface(
+                                onClick = onPackagesClick,
+                                color = Color.Transparent
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = "الباقات المتاحة",
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        fontWeight = FontWeight.Medium,
+                                        color = JathrTextMain
+                                    )
+
+                                    Icon(
+                                        imageVector = IconChevronLeft,
+                                        contentDescription = "الباقات المتاحة",
+                                        tint = JathrTextSecondary,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                }
+                            }
+
+                            HorizontalDivider(color = JathrBorder, thickness = 0.5.dp)
+
+// Client Row 5: Subscription History
+                            Surface(
+                                onClick = onSubscriptionHistoryClick,
+                                color = Color.Transparent
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = "سجل الاشتراكات",
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        fontWeight = FontWeight.Medium,
+                                        color = JathrTextMain
+                                    )
+
+                                    Icon(
+                                        imageVector = IconChevronLeft,
+                                        contentDescription = "سجل الاشتراكات",
+                                        tint = JathrTextSecondary,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                }
+                            }
                         } else {
                             // Specialist Row 1: Notifications
                             Surface(
@@ -765,6 +826,8 @@ fun AccountScreenSamplePreview() {
             onMedicalFilesClick = {},
             onNotificationsClick = {},
             onFollowUpLogClick = {},
+            onPackagesClick = {},
+            onSubscriptionHistoryClick = {},
             onAvailabilityClick = {},
             onLogoutClick = {},
         )
@@ -796,6 +859,8 @@ fun AccountSpecialistPreview() {
             onMedicalFilesClick = {},
             onNotificationsClick = {},
             onFollowUpLogClick = {},
+            onPackagesClick = {},
+            onSubscriptionHistoryClick = {},
             onAvailabilityClick = {},
             onLogoutClick = {},
         )
@@ -816,6 +881,8 @@ fun AccountScreenEmptyPreview() {
             onMedicalFilesClick = {},
             onNotificationsClick = {},
             onFollowUpLogClick = {},
+            onPackagesClick = {},
+            onSubscriptionHistoryClick = {},
             onAvailabilityClick = {},
             onLogoutClick = {},
         )

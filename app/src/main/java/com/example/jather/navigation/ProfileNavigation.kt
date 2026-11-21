@@ -154,8 +154,21 @@ private fun AccountRoute(navController: NavController) {
             onEditProfessionalClick = { navController.navigateToEditProfile() },
             onMedicalFilesClick = { navController.navigateToMedicalFiles() },
             onNotificationsClick = { navController.navigateToNotifications() },
-            onFollowUpLogClick = { navController.navigateToWeeklyFollowUp() },
-            onAvailabilityClick = { navController.navigateToAvailability() },
+            onFollowUpLogClick = {
+                navController.navigateToWeeklyFollowUp()
+            },
+
+            onPackagesClick = {
+                navController.navigate(Screen.Packages.route)
+            },
+
+            onSubscriptionHistoryClick = {
+                navController.navigate(Screen.SubscriptionHistory.route)
+            },
+
+            onAvailabilityClick = {
+                navController.navigateToAvailability()
+            },
             onLogoutClick = {
                 navController.navigate(Screen.Login.route) { popUpTo(0) }
             },
