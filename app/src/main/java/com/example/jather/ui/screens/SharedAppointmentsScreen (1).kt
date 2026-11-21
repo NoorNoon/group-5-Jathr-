@@ -64,7 +64,7 @@ internal val sharedSuccess=Color(0xFF28854D)
  CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl){
  JathrScaffold(title=title,navController=navController,showBottomBar=true){ padding->
  Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
- Text("جذر",color=JathrPrimary,fontWeight=FontWeight.Bold,fontSize=25.sp,modifier=Modifier.align(Alignment.CenterHorizontally))
+ Text("جذر",color=JathrPrimary,fontWeight=FontWeight.Bold,fontSize=20.sp,modifier=Modifier.align(Alignment.CenterHorizontally))
  Text(title,color=JathrTextMain,fontWeight=FontWeight.Bold,fontSize=19.sp)
  content()
  }
