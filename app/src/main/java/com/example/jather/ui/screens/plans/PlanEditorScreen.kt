@@ -69,6 +69,9 @@ import com.example.jather.ui.theme.JathrLavender
 import com.example.jather.ui.theme.JathrPrimary
 import com.example.jather.ui.theme.JathrTextMain
 import com.example.jather.ui.theme.JathrTextSecondary
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material3.Icon
 
 @Composable
 fun PlanEditorScreen(navController: NavController, clientId: Int) {
@@ -352,7 +355,12 @@ fun MealViewCard(meal: Meal, onEditClick: () -> Unit) {
                 .clickable { onEditClick() },
             contentAlignment = Alignment.Center
         ) {
-            Text(text = "✏️", fontSize = 15.sp)
+            Icon(
+                imageVector = Icons.Outlined.Edit,
+                contentDescription = "تعديل",
+                tint = JathrPrimary,
+                modifier = Modifier.size(18.dp)
+            )
         }
     }
 }

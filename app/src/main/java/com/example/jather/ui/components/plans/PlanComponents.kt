@@ -50,6 +50,16 @@ import com.example.jather.ui.theme.JathrPrimary
 import com.example.jather.ui.theme.JathrTextMain
 import com.example.jather.ui.theme.JathrTextSecondary
 import kotlinx.coroutines.launch
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.LocalFireDepartment
+import androidx.compose.material.icons.outlined.FreeBreakfast
+import androidx.compose.material.icons.outlined.LunchDining
+import androidx.compose.material.icons.outlined.DinnerDining
+import androidx.compose.material.icons.outlined.BakeryDining
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.material3.Icon
+import androidx.compose.foundation.layout.size
 
 val PlanBackground = Color(0xFFF7F4FB)
 val PlanGreen = Color(0xFF1E6B3E)
@@ -213,12 +223,31 @@ fun PlanStatusChip(status: PlanStatus) {
 
 @Composable
 fun PlanTotalCalories(calories: Int) {
-    Text(
-        text = "إجمالي السعرات اليومية: $calories",
-        color = JathrTextSecondary,
-        fontSize = 12.sp,
-        modifier = Modifier.padding(horizontal = 18.dp)
-    )
+    Row(
+        modifier = Modifier.padding(horizontal = 18.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.LocalFireDepartment,
+            contentDescription = null,
+            tint = JathrPrimary,
+            modifier = Modifier.size(16.dp)
+        )
+        Spacer(modifier = Modifier.width(4.dp))
+        Text(
+            text = "إجمالي السعرات اليومية: $calories",
+            color = JathrTextSecondary,
+            fontSize = 12.sp
+        )
+    }
+}
+
+// Icon shown next to each meal name
+private fun mealIcon(name: String): ImageVector = when (name) {
+    "الفطور" -> Icons.Outlined.FreeBreakfast
+    "الغداء" -> Icons.Outlined.LunchDining
+    "العشاء" -> Icons.Outlined.DinnerDining
+    else -> Icons.Outlined.BakeryDining
 }
 
 @Composable
@@ -231,7 +260,23 @@ fun PlanMealCard(meal: Meal) {
             .border(1.dp, JathrBorder, RoundedCornerShape(16.dp))
             .padding(16.dp)
     ) {
-        Text(text = meal.name, color = JathrTextMain, fontSize = 15.sp, fontWeight = FontWeight.Bold)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(
+                modifier = Modifier
+                    .size(32.dp)
+                    .background(JathrLavender, RoundedCornerShape(10.dp)),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = mealIcon(meal.name),
+                    contentDescription = null,
+                    tint = JathrPrimary,
+                    modifier = Modifier.size(18.dp)
+                )
+            }
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(text = meal.name, color = JathrTextMain, fontSize = 15.sp, fontWeight = FontWeight.Bold)
+        }
         Text(
             text = meal.items,
             color = JathrTextSecondary,
@@ -243,16 +288,27 @@ fun PlanMealCard(meal: Meal) {
 
 @Composable
 fun PlanNotesBox(notes: String) {
-    Text(
-        text = if (notes.isEmpty()) "ملاحظات الأخصائي: لا توجد ملاحظات" else "ملاحظات الأخصائي: $notes",
-        color = PlanGreen,
-        fontSize = 13.sp,
+    Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 18.dp)
             .background(PlanLightGreen, RoundedCornerShape(14.dp))
-            .padding(14.dp)
-    )
+            .padding(14.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.Info,
+            contentDescription = null,
+            tint = PlanGreen,
+            modifier = Modifier.size(18.dp)
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = if (notes.isEmpty()) "ملاحظات الأخصائي: لا توجد ملاحظات" else "ملاحظات الأخصائي: $notes",
+            color = PlanGreen,
+            fontSize = 13.sp
+        )
+    }
 }
 
 @Composable

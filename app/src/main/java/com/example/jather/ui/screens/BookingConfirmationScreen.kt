@@ -23,6 +23,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.jather.navigation.Screen
 import com.example.jather.ui.components.JathrBottomBar
 import com.example.jather.ui.components.bottomNavItems
+import com.example.jather.data.DemoData
 
 // Local Color Palette (Matching PackagesScreen.kt)
 private val PrimaryPurple = Color(0xFF6B4E8C)
@@ -136,7 +137,7 @@ fun BookingConfirmationScreen(navController: NavController) {
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Text("الأخصائي:", fontSize = 13.sp, color = SecondaryText)
-                                Text("أ. سارة الشمري", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = MainText)
+                                Text(DemoData.SPECIALIST_NAME, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = MainText)
                             }
 
                             Row(

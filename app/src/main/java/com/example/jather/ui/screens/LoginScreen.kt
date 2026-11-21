@@ -17,6 +17,9 @@ import com.example.jather.ui.theme.JathrTextMain
 import com.example.jather.ui.theme.JathrTextSecondary
 import com.example.jather.navigation.SessionRole
 import com.example.jather.ui.components.RoleSelector
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Lock
 
 @Composable
 fun LoginScreen(navController: NavController) {
@@ -63,6 +66,7 @@ fun LoginScreen(navController: NavController) {
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("البريد الإلكتروني") },
+                leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = null, tint = JathrPrimary) },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -73,6 +77,7 @@ fun LoginScreen(navController: NavController) {
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("كلمة المرور") },
+                leadingIcon = { Icon(Icons.Outlined.Lock, contentDescription = null, tint = JathrPrimary) },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
@@ -147,6 +152,7 @@ fun ForgotPasswordScreen(navController: NavController) {
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("البريد الإلكتروني") },
+                leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = null, tint = JathrPrimary) },
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(24.dp))

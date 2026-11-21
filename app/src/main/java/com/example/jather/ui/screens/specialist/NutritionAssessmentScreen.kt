@@ -18,6 +18,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jather.ui.components.specialist.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Check
 
 @Composable
 fun NutritionAssessmentScreen(navController: NavController, clientId: Int = 1) {
@@ -49,7 +52,7 @@ fun NutritionAssessmentScreen(navController: NavController, clientId: Int = 1) {
                     .padding(12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("👤", fontSize = 18.sp)
+                Icon(Icons.Outlined.Person, contentDescription = null, tint = SpecialistPrimary, modifier = Modifier.size(20.dp))
                 Spacer(Modifier.width(10.dp))
                 Text(
                     "تقييم العميل: ${client.name}",
@@ -201,7 +204,7 @@ private fun AssessmentChip(
             fontSize = 14.sp,
             fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal
         )
-        if (selected) Text("✓", color = SpecialistPrimary, fontWeight = FontWeight.Bold)
+        if (selected) Icon(Icons.Outlined.Check, contentDescription = null, tint = SpecialistPrimary, modifier = Modifier.size(18.dp))
     }
 }
 

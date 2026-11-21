@@ -26,6 +26,8 @@ import com.example.jather.data.DemoData
 import com.example.jather.navigation.navigateToSpecialistClient
 import com.example.jather.navigation.navigateToSpecialistFiles
 import com.example.jather.ui.components.specialist.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Person
 
 data class SpecialistClient(
     val id: Int,
@@ -152,11 +154,11 @@ fun ClientCard(client: SpecialistClient, onClick: () -> Unit) {
                 .background(SpecialistLavender, CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = client.name.take(1),
-                color = SpecialistPrimary,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
+            Icon(
+                imageVector = Icons.Outlined.Person,
+                contentDescription = client.name,
+                tint = SpecialistPrimary,
+                modifier = Modifier.size(27.dp)
             )
         }
 

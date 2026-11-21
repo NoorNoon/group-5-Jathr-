@@ -25,6 +25,9 @@ object DemoData {
         DemoClient(6, "فهد السبيعي", "نمط حياة صحي", 12, "مكتمل")
     )
 
+    /** The specialist shown to clients (home, notes). */
+    const val SPECIALIST_NAME = "أ. سارة الشمري"
+
     /** The client who is "logged in" when the role chosen at login is client. */
     const val CURRENT_CLIENT_ID = 2
 

@@ -51,6 +51,10 @@ import com.example.jather.ui.theme.JathrBorder
 import com.example.jather.ui.theme.JathrLavender
 import com.example.jather.ui.theme.JathrTextMain
 import com.example.jather.ui.theme.JathrTextSecondary
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Description
+import androidx.compose.material3.Icon
+import com.example.jather.ui.theme.JathrPrimary
 
 @Composable
 fun PlansListScreen(navController: NavController) {
@@ -229,7 +233,12 @@ fun PlanRow(plan: DietPlan, onClick: () -> Unit) {
                 .background(JathrLavender, RoundedCornerShape(12.dp)),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = "📋", fontSize = 18.sp)
+            Icon(
+                imageVector = Icons.Outlined.Description,
+                contentDescription = null,
+                tint = JathrPrimary,
+                modifier = Modifier.size(20.dp)
+            )
         }
 
         Spacer(modifier = Modifier.width(12.dp))

@@ -25,6 +25,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.jather.navigation.Screen
 import com.example.jather.ui.components.JathrBottomBar
 import com.example.jather.ui.components.bottomNavItems
+import com.example.jather.data.DemoData
 
 // Local Color Palette (Matching PackagesScreen.kt)
 private val DarkPurple = Color(0xFF3B2A50)
@@ -48,7 +49,7 @@ data class Specialist(
 fun BookAppointmentScreen(navController: NavController) {
     val specialists = remember {
         listOf(
-            Specialist("1", "أ. سارة الشمري", "أخصائية تغذية علاجية", "⭐ 4.9", "👩‍⚕️"),
+            Specialist("1", DemoData.SPECIALIST_NAME, "أخصائية تغذية علاجية", "⭐ 4.9", "👩‍⚕️"),
             Specialist("2", "د. خالد العمري", "مستشار سمنة وزيادة وزن", "⭐ 4.8", "👨‍⚕️"),
             Specialist("3", "أ. نورة الفالح", "أخصائية تغذية رياضية", "⭐ 4.9", "🥗")
         )

@@ -18,27 +18,36 @@ import com.example.jather.navigation.Screen
 import com.example.jather.navigation.SessionRole
 import com.example.jather.ui.theme.JathrLavender
 import com.example.jather.ui.theme.JathrPrimary
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.CalendarMonth
+import androidx.compose.material.icons.outlined.RestaurantMenu
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Groups
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.ui.graphics.vector.ImageVector
 
 data class BottomNavItem(
     val label: String,
     val route: String,
-    val iconEmoji: String
+    val iconEmoji: String,
+    val icon: ImageVector
 )
 
 val bottomNavItems = listOf(
-    BottomNavItem("الرئيسية", Screen.Home.route, "🏠"),
-    BottomNavItem("مواعيدي", Screen.Appointments.route, "📅"),
-    BottomNavItem("الخطة الغذائية", Screen.NutritionPlan.route, "🥗"),
-    BottomNavItem("الملف الشخصي", Screen.Profile.route, "👤")
+    BottomNavItem("الرئيسية", Screen.Home.route, "🏠", Icons.Outlined.Home),
+    BottomNavItem("مواعيدي", Screen.Appointments.route, "📅", Icons.Outlined.CalendarMonth),
+    BottomNavItem("الخطة الغذائية", Screen.NutritionPlan.route, "🥗", Icons.Outlined.RestaurantMenu),
+    BottomNavItem("الملف الشخصي", Screen.Profile.route, "👤", Icons.Outlined.Person)
 )
 
 // Tabs for a specialist (role chosen at login/sign-up)
 val specialistBottomNavItems = listOf(
-    BottomNavItem("الرئيسية", Screen.Home.route, "🏠"),
-    BottomNavItem("العملاء", "specialist_clients", "👥"),
-    BottomNavItem("الخطط", Screen.NutritionPlans.route, "🥗"),
-    BottomNavItem("الجدول", Screen.Appointments.route, "📅"),
-    BottomNavItem("حسابي", Screen.Profile.route, "👤")
+    BottomNavItem("الرئيسية", Screen.Home.route, "🏠", Icons.Outlined.Home),
+    BottomNavItem("العملاء", "specialist_clients", "👥", Icons.Outlined.Groups),
+    BottomNavItem("الخطط", Screen.NutritionPlans.route, "🥗", Icons.Outlined.RestaurantMenu),
+    BottomNavItem("الجدول", Screen.Appointments.route, "📅", Icons.Outlined.CalendarMonth),
+    BottomNavItem("حسابي", Screen.Profile.route, "👤", Icons.Outlined.Person)
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,6 +93,13 @@ fun JathrScaffold(
                 navigationIcon = {
                     if (showBackButton && currentRoute != Screen.Home.route && currentRoute != Screen.Start.route) {
                         TextButton(onClick = { if (onBackClick != null) onBackClick() else navController.popBackStack() }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.size(18.dp)
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
                             Text("عودة", color = Color.White, fontWeight = FontWeight.Bold)
                         }
                     }
@@ -137,7 +153,11 @@ fun JathrBottomBar(navController: NavController) {
                         )
                     },
                     icon = {
-                        Text(text = item.iconEmoji, fontSize = 18.sp)
+                        Icon(
+                            imageVector = item.icon,
+                            contentDescription = item.label,
+                            tint = if (isSelected) JathrPrimary else Color.DarkGray
+                        )
                     },
                     colors = NavigationBarItemDefaults.colors(
                         indicatorColor = Color.White

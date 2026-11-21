@@ -25,6 +25,9 @@ import com.example.jather.navigation.navigateToSpecialistAnalysisReview
 import com.example.jather.navigation.navigateToSpecialistAssessment
 import com.example.jather.navigation.navigateToSpecialistFiles
 import com.example.jather.ui.components.specialist.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Description
+import androidx.compose.material.icons.outlined.Person
 
 @Composable
 fun ClientProfileScreen(navController: NavController, clientId: Int = 1) {
@@ -63,11 +66,11 @@ fun ClientProfileScreen(navController: NavController, clientId: Int = 1) {
                         .background(SpecialistLavender, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = client.name.take(1),
-                        color = SpecialistPrimary,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
+                    Icon(
+                        imageVector = Icons.Outlined.Person,
+                        contentDescription = client.name,
+                        tint = SpecialistPrimary,
+                        modifier = Modifier.size(36.dp)
                     )
                 }
                 Spacer(modifier = Modifier.width(16.dp))
@@ -297,7 +300,7 @@ fun FileRow(fileName: String, type: String, onViewClick: () -> Unit) {
             .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = "📄", fontSize = 18.sp)
+        Icon(Icons.Outlined.Description, contentDescription = null, tint = SpecialistPrimary, modifier = Modifier.size(20.dp))
         Spacer(modifier = Modifier.width(10.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(text = fileName, color = SpecialistTextMain, fontSize = 13.sp, fontWeight = FontWeight.Bold, maxLines = 1)
