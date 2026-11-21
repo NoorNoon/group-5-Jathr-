@@ -55,10 +55,42 @@ fun AppNavigation() {
         composable(Screen.AssessmentStep3.route) { AssessmentStep3Screen(navController) }
         composable(Screen.Appointments.route) { AppointmentsScreen(navController) }
         composable(Screen.NutritionPlan.route) { NutritionPlanScreen(navController) }
-        composable(Screen.BookAppointment.route) { BookAppointmentScreen(navController) }
-        composable(Screen.Payment.route) { PaymentScreen(navController) }
-        composable(Screen.PaymentFailed.route) { PaymentFailedScreen(navController) }
-        composable(Screen.BookingConfirmation.route) { BookingConfirmationScreen(navController) }
+        composable(Screen.BookAppointment.route) {
+            if (SessionRole.isSpecialist) {
+                androidx.compose.runtime.LaunchedEffect(Unit) {
+                    navController.navigate(Screen.Availability.route) { popUpTo(Screen.Home.route) }
+                }
+            } else {
+                BookAppointmentScreen(navController)
+            }
+        }
+        composable(Screen.Payment.route) {
+            if (SessionRole.isSpecialist) {
+                androidx.compose.runtime.LaunchedEffect(Unit) {
+                    navController.navigate(Screen.Availability.route) { popUpTo(Screen.Home.route) }
+                }
+            } else {
+                PaymentScreen(navController)
+            }
+        }
+        composable(Screen.PaymentFailed.route) {
+            if (SessionRole.isSpecialist) {
+                androidx.compose.runtime.LaunchedEffect(Unit) {
+                    navController.navigate(Screen.Availability.route) { popUpTo(Screen.Home.route) }
+                }
+            } else {
+                PaymentFailedScreen(navController)
+            }
+        }
+        composable(Screen.BookingConfirmation.route) {
+            if (SessionRole.isSpecialist) {
+                androidx.compose.runtime.LaunchedEffect(Unit) {
+                    navController.navigate(Screen.Availability.route) { popUpTo(Screen.Home.route) }
+                }
+            } else {
+                BookingConfirmationScreen(navController)
+            }
+        }
         composable(Screen.WeeklyFollowUp.route) { WeeklyFollowUpScreen(navController) }
         composable(Screen.Progress.route) { ProgressScreen(navController) }
         composable(Screen.Notifications.route) { NotificationsScreen(navController) }

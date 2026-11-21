@@ -46,7 +46,7 @@ val specialistBottomNavItems = listOf(
     BottomNavItem("الرئيسية", Screen.Home.route, "🏠", Icons.Outlined.Home),
     BottomNavItem("العملاء", "specialist_clients", "👥", Icons.Outlined.Groups),
     BottomNavItem("الخطط", Screen.NutritionPlans.route, "🥗", Icons.Outlined.RestaurantMenu),
-    BottomNavItem("الجدول", Screen.Appointments.route, "📅", Icons.Outlined.CalendarMonth),
+    BottomNavItem("الجدول", Screen.Availability.route, "📅", Icons.Outlined.CalendarMonth),
     BottomNavItem("حسابي", Screen.Profile.route, "👤", Icons.Outlined.Person)
 )
 
@@ -175,6 +175,7 @@ private fun isTabSelected(tabRoute: String, currentRoute: String?): Boolean {
     return when (tabRoute) {
         "specialist_clients" -> currentRoute.startsWith("specialist_")
         Screen.NutritionPlans.route -> currentRoute == Screen.PlanEditor.route || currentRoute == Screen.PlanPreview.route
+        Screen.Availability.route -> currentRoute == Screen.Availability.route
         else -> false
     }
 }

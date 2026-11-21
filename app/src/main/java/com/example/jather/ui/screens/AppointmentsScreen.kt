@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.jather.navigation.Screen
+import com.example.jather.navigation.SessionRole
 import com.example.jather.ui.components.JathrScaffold
 import com.example.jather.ui.theme.JathrPrimary
 import com.example.jather.data.DemoData
@@ -244,30 +245,32 @@ fun AppointmentsScreen(navController: NavController) {
                 }
 
                 // Booking button
-                Button(
-                    onClick = {
-                        navController.navigate(
-                            Screen.BookAppointment.route
+                if (!SessionRole.isSpecialist) {
+                    Button(
+                        onClick = {
+                            navController.navigate(
+                                Screen.BookAppointment.route
+                            )
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                horizontal = 16.dp,
+                                vertical = 12.dp
+                            )
+                            .height(52.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = JathrPrimary
                         )
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 12.dp
+                    ) {
+                        Text(
+                            text = "حجز موعد جديد",
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp
                         )
-                        .height(52.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = JathrPrimary
-                    )
-                ) {
-                    Text(
-                        text = "حجز موعد جديد",
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 15.sp
-                    )
+                    }
                 }
             }
         }
