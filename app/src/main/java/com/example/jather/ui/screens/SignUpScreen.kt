@@ -101,6 +101,7 @@ fun SignUpScreen(navController: NavController) {
             Button(
                 onClick = {
                     SessionRole.isSpecialist = isSpecialist
+                    SessionRole.hasDemoData = false
                     if (isSpecialist) {
                         navController.navigate(Screen.Home.route) {
                             popUpTo(Screen.Start.route) { inclusive = true }

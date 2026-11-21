@@ -107,9 +107,13 @@ private fun SharedHomeRoute(navController: NavController) {
     // The demo client is the same one the plans screens use (PlanRepository.CURRENT_CLIENT_ID),
     // so the name on the home screen matches the plan the specialist published.
     val clientFirstName = currentClientName().substringBefore(" ")
-    val uiState = demoHomeState(SessionRole.isSpecialist).copy(
-        userName = if (SessionRole.isSpecialist) DemoData.SPECIALIST_NAME.removePrefix("أ. ").substringBefore(" ") else clientFirstName
-    )
+    val uiState = if (SessionRole.hasDemoData) {
+        demoHomeState(SessionRole.isSpecialist).copy(
+            userName = if (SessionRole.isSpecialist) DemoData.SPECIALIST_NAME.removePrefix("أ. ").substringBefore(" ") else clientFirstName
+        )
+    } else {
+        SharedHomeUiState(isSpecialist = SessionRole.isSpecialist) // after Sign Up: empty
+    }
 
     JathrScaffold(title = "", navController = navController, showTopBar = false) { padding ->
         SharedHomeScreen(
@@ -133,8 +137,11 @@ private fun SharedHomeRoute(navController: NavController) {
 @Composable
 private fun AccountRoute(navController: NavController) {
     // TODO: logic - I will write it (replace with ViewModel and real user data from Firestore)
-    var uiState by remember {
-        mutableStateOf(AccountUiState(fullName = if (SessionRole.isSpecialist) "" else currentClientName()))
+    var uiState by remember(SessionRole.isSpecialist, SessionRole.hasDemoData) {
+        mutableStateOf(
+            if (SessionRole.hasDemoData) demoAccountState(SessionRole.isSpecialist)
+            else AccountUiState()
+        )
     }
 
     JathrScaffold(title = "", navController = navController, showTopBar = false) { padding ->
@@ -159,8 +166,11 @@ private fun AccountRoute(navController: NavController) {
 @Composable
 private fun EditProfileRoute(navController: NavController) {
     // TODO: logic - I will write it (replace with ViewModel, validation and saving to Firestore)
-    var uiState by remember {
-        mutableStateOf(EditProfileUiState(isSpecialist = SessionRole.isSpecialist, fullName = if (SessionRole.isSpecialist) "" else currentClientName()))
+    var uiState by remember(SessionRole.isSpecialist, SessionRole.hasDemoData) {
+        mutableStateOf(
+            if (SessionRole.hasDemoData) demoEditProfileState(SessionRole.isSpecialist)
+            else EditProfileUiState(isSpecialist = SessionRole.isSpecialist)
+        )
     }
 
     JathrScaffold(
@@ -202,11 +212,19 @@ private fun AvailabilityRoute(navController: NavController) {
         stringResource(R.string.day_friday),
         stringResource(R.string.day_saturday)
     )
-    var uiState by remember {
+    var uiState by remember(SessionRole.hasDemoData) {
         mutableStateOf(
             AvailabilityUiState(
                 days = dayLabels.mapIndexed { index, label ->
-                    DayAvailabilityUi(id = index.toString(), dayLabel = label)
+                    // Demo (after Login): Sunday to Thursday, 09:00 - 17:00. After Sign Up: empty.
+                    val workDay = SessionRole.hasDemoData && index in 0..4
+                    DayAvailabilityUi(
+                        id = index.toString(),
+                        dayLabel = label,
+                        isAvailable = workDay,
+                        startTime = if (workDay) "09:00" else "",
+                        endTime = if (workDay) "17:00" else ""
+                    )
                 }
             )
         )
