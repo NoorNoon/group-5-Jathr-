@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "jather"
+rootProject.name = "Jathr project"
 include(":app")
  
