@@ -31,6 +31,7 @@ sealed class Screen(val route: String) {
     object Availability : Screen("availability")
     object RateSession : Screen("rate_session")
     object Packages : Screen("packages")
+    object SubscriptionHistory : Screen("subscription_history")
     object NutritionPlans : Screen("nutrition_plans")
     object PlanEditor : Screen("plan_editor/{clientId}") {
         fun createRoute(clientId: Int) = "plan_editor/$clientId"
@@ -38,6 +39,7 @@ sealed class Screen(val route: String) {
     object PlanPreview : Screen("plan_preview/{clientId}") {
         fun createRoute(clientId: Int) = "plan_preview/$clientId"
     }
+
 }
 
 @Composable
@@ -63,6 +65,9 @@ fun AppNavigation() {
         composable(Screen.MedicalFiles.route) { MedicalFilesScreen(navController) }
         composable(Screen.RateSession.route) { RateSessionScreen(navController) }
         composable(Screen.Packages.route) { PackagesScreen(navController) }
+        composable(Screen.SubscriptionHistory.route) {
+            SubscriptionHistoryScreen(navController)
+        }
         plansGraph(navController)
         profileGraph(navController)
         specialistGraph(navController)
