@@ -64,55 +64,54 @@ fun JathrScaffold(
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry.value?.destination?.route
 
-    Scaffold(
-        topBar = {
-            if (showTopBar) TopAppBar(
-                title = {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(end = 12.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = title,
-                            color = Color.White,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            text = "جذر Jathr",
-                            color = JathrLavender,
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = JathrPrimary),
-                navigationIcon = {
-                    if (showBackButton && currentRoute != Screen.Home.route && currentRoute != Screen.Start.route) {
-                        TextButton(onClick = { if (onBackClick != null) onBackClick() else navController.popBackStack() }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                                contentDescription = null,
-                                tint = Color.White,
-                                modifier = Modifier.size(18.dp)
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+        Scaffold(
+            topBar = {
+                if (showTopBar) TopAppBar(
+                    title = {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(end = 12.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = title,
+                                color = Color.White,
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold
                             )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text("عودة", color = Color.White, fontWeight = FontWeight.Bold)
+                            Text(
+                                text = "جذر",
+                                color = JathrLavender,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = JathrPrimary),
+                    navigationIcon = {
+                        if (showBackButton && currentRoute != Screen.Home.route && currentRoute != Screen.Start.route) {
+                            IconButton(onClick = { if (onBackClick != null) onBackClick() else navController.popBackStack() }) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                                    contentDescription = "رجوع",
+                                    tint = Color.White
+                                )
+                            }
                         }
                     }
+                )
+            },
+            bottomBar = {
+                if (showBottomBar && currentRoute != Screen.Start.route && currentRoute != Screen.Login.route && currentRoute != Screen.SignUp.route && currentRoute != Screen.ForgotPassword.route) {
+                    JathrBottomBar(navController)
                 }
-            )
-        },
-        bottomBar = {
-            if (showBottomBar && currentRoute != Screen.Start.route && currentRoute != Screen.Login.route && currentRoute != Screen.SignUp.route && currentRoute != Screen.ForgotPassword.route) {
-                JathrBottomBar(navController)
             }
+        ) { innerPadding ->
+            content(innerPadding)
         }
-    ) { innerPadding ->
-        content(innerPadding)
     }
 }
 

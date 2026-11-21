@@ -7,6 +7,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -74,8 +76,12 @@ fun ClientFollowUpScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                TextButton(onClick = onBack) {
-                    Text("رجوع", color = Purple)
+                IconButton(onClick = onBack) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                        contentDescription = "رجوع",
+                        tint = Purple
+                    )
                 }
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -445,7 +451,7 @@ fun ProgressScreen(navController: NavController) {
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     Text(
-                        text = "جذر Jathr",
+                        text = "جذر",
                         modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                         color = JathrPrimary,
                         fontWeight = FontWeight.Bold,

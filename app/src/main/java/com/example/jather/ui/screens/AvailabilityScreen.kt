@@ -47,9 +47,9 @@ private val IconArrowBack: ImageVector = ImageVector.Builder(
         stroke = SolidColor(Color.Black),
         strokeLineWidth = 2.5f,
     ) {
-        moveTo(15f, 18f)
-        lineTo(9f, 12f)
-        lineTo(15f, 6f)
+        moveTo(9f, 18f)
+        lineTo(15f, 12f)
+        lineTo(9f, 6f)
     }
 }.build()
 

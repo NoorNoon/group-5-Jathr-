@@ -64,7 +64,7 @@ fun NutritionPlanScreen(navController: NavController) {
                         text = "جذر",
                         color = JathrPrimary,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp
+                        fontSize = 20.sp
                     )
                     Spacer(Modifier.height(12.dp))
                     Text(

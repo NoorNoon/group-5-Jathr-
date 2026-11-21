@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">jather</string>
+    <string name="app_name">جذر</string>
     <string name="edit_profile_title">تعديل الملف الشخصي</string>
     <string name="full_name_label">الاسم الكامل</string>
     <string name="phone_label">رقم الجوال</string>
